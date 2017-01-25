@@ -1,0 +1,1768 @@
+  %Plantilla basada en "Template for Masters / Doctoral Thesis" (plantilla disponible en writeLaTex) que subió LaTeXTemplates.com
+
+\documentclass[11pt, oneside]{book}
+\usepackage[paperwidth=17cm, paperheight=22.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amssymb,amsmath,amsthm} %paquete para símbolo matemáticos
+\usepackage{amsfonts}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage[utf8]{inputenc} %Paquete para escribir acentos y otros símbolos directamente
+\usepackage{enumerate}
+%\usepackage{subfig}
+\usepackage{graphicx}
+\usepackage{mdframed}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage[font={small,it}]{caption}
+%\usepackage{subfig} %para poner subfiguras
+\graphicspath{{Img/}} %En qué carpeta están las imágenes
+\usepackage[nottoc]{tocbibind}
+\usepackage[pdftex,
+            pdfauthor={lampon},
+            pdftitle={tesis},
+            pdfsubject={datascience},
+            pdfkeywords={salud},
+            pdfproducer={Latex con hyperref},
+            pdfcreator={pdflatex}]{hyperref}
+
+\usepackage{titlesec} 
+\usepackage{lipsum} % just to generate text for the example
+%\usepackage[backend=bibtex]{biblatex}
+
+\titleformat{\chapter}[display]
+  {\bfseries\Large}
+  {\filright\MakeUppercase{\chaptertitlename} \Huge\thechapter}
+  {1ex}
+  {\titlerule\vspace{1ex}\filleft}
+  [\vspace{1ex}\titlerule]
+  
+
+
+\begin{document}
+
+\renewcommand{\bibname}{Referencias}
+
+\lstset{%frame=tb,
+language=R,
+basicstyle=\ttfamily,%\footnotesize,       % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=1,   
+keywordstyle=\color{blue}\ttfamily,
+stringstyle=\color{black}\ttfamily,
+commentstyle=\color{gray}\ttfamily,
+alsoletter={.}
+fancyvrb=true
+%breaklines=true
+}
+
+%\SweaveOpts{concordance=TRUE}
+
+%----------------------------------------------------------------------------------------
+%  COMANDOS PERSONALIZADOS
+%----------------------------------------------------------------------------------------
+
+%SI TU TESIS TIENE TEOREMAS Y DEMOSTRACIONES, PUEDES DESCOMENTAR Y USAR LOS SIGUIENTES COMANDOS
+
+\renewcommand{\proofname}{Demostración}
+\providecommand{\norm}[1]{\lVert#1\rVert} %Provee el comando para producir una norma.
+\providecommand{\innp}[1]{\langle#1\rangle} 
+\newcommand{\seno}{\mathrm{sen}}
+\newcommand{\diff}{\mathrm{d}}
+
+\newtheorem{teo}{Teorema}[section] 
+\newtheorem{cor}[teo]{Corolario}
+\newtheorem{lem}[teo]{Lema}
+
+\theoremstyle{definition}
+\newtheorem{dfn}[teo]{Definición}
+
+\theoremstyle{remark}
+\newtheorem{obs}[teo]{Observación}
+
+\allowdisplaybreaks
+
+
+%----------------------------------------------------------------------------------------
+%	PORTADA
+%----------------------------------------------------------------------------------------
+
+\title{Patrones espaciales y temporales de la mortalidad infantil y juvenil por leucemias en el centro de México} %Con este nombre se guardará el proyecto en writeLaTex
+
+\begin{titlepage}
+\begin{center}
+
+\underline{\textsc{\Large Instituto Tecnológico Autónomo de México}}\\[4em]
+
+%Figura
+\begin{figure}[h]
+\begin{center}
+%\includegraphics[scale=2]{itam_logo.jpg}
+\includegraphics[scale=0.3]{logonegro.png}
+\end{center}
+\end{figure}
+
+\vspace{3em}
+
+\textsc{\Large Patrones espaciales de la mortalidad infantil y juvenil por leucemias en la región centro de la República Mexicana.}\\[3em]
+
+\textsc{\large Tesis}\\[1.5em]
+
+\textsc{\large que para obtener el grado de}\\[1.5em]
+
+\textsc{\large MAESTRO EN CIENCIA DE DATOS}\\[1.5em]
+
+\textsc{\large presenta}\\[1.5em]
+
+\textsc{\Large JOSÉ DAVID LAMPÓN ORTEGA}\\[1.5em]
+
+\textsc{\large Asesor: DR. ADOLFO JAVIER DE UNÁNUE TISCAREÑO}
+
+\end{center}
+
+\vspace*{\fill}
+\textsc{Ciudad de México \hspace*{\fill} 2016}
+
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%	DECLARACIÓN
+%----------------------------------------------------------------------------------------
+
+\thispagestyle{empty}
+%\vspace*{\fill}
+\vspace{3em}
+\begingroup
+\noindent ``Con fundamento en los artículos 21 y 27 de la Ley Federal del Derecho de Autor y como titular de los derechos moral y patrimonial de la obra titulada ``\textbf{PATRONES ESPACIALES DE LA MORTALIDAD INFANTIL Y JUVENIL POR LEUCEMIAS EN LA REGIÓN CENTRO DE LA REPÚBLICA MEXICANA}'', otorgo de manera gratuita y permanente al Instituto Tecnológico Autónomo de México y a la Biblioteca Raúl Bailléres Jr., autorización para que fijen la obra en cualquier medio, incluido el electrónico, y la divulguen entre sus usuarios, profesores, estudiantes o terceras personas, sin que pueda percibir por tal divulgación una contraprestación''.
+
+\centering
+\vspace{5em}
+\hspace{3em}
+
+\textsc{JOSÉ DAVID LAMPÓN ORTEGA}
+
+\vspace{5em}
+
+\rule[1em]{20em}{0.5pt} % Línea para la fecha
+
+\textsc{Fecha}
+ 
+\vspace{8em}
+
+\rule[1em]{20em}{0.5pt} % Línea para la firma
+
+\textsc{Firma}
+
+\endgroup
+\vspace*{\fill}
+
+
+%----------------------------------------------------------------------------------------
+%	DEDICATORIA
+%----------------------------------------------------------------------------------------
+
+\pagestyle{empty}
+\frontmatter
+\pagestyle{plain}
+
+\vspace{5em}
+\begin{flushright}
+\textit{A Gabriela, Casilda y Emilia}
+\end{flushright}
+
+
+%----------------------------------------------------------------------------------------
+%	AGRADECIMIENTOS
+%----------------------------------------------------------------------------------------
+\newpage
+\pagestyle{empty}
+
+{\Large \textbf{Agradecimientos}}\\
+\pagestyle{plain}
+
+Agradezco el apoyo recibido de mi familia para concluir este proyecto.\\
+
+A los profesores y compañeros de la Maestría en Ciencia de Datos del ITAM por su afinidad e inspiración.\\
+
+A los colaboradores del CADSalud (Centro de Análisis de Datos para la Salud) por sus valiosas contribuciones a este trabajo.\\
+
+
+%----------------------------------------------------------------------------------------
+%	PREFACIO
+%----------------------------------------------------------------------------------------
+
+\newpage
+
+{\Large \textbf{Prefacio}}\\
+
+\pagestyle{plain}
+%\markboth{PREFACIO23}{PREFACIO} % encabezado 
+
+\noindent El presente reporte tiene como objetivo principal la identificación de patrones espaciales en los datos de mortalidad infantil y juvenil causado por leucemias durante el periodo de 1990 a 2014 en México. En particular, se analiza la región central del país, donde se identifican las condiciones necesarias para hacer predicción espacial mediante la interpolación de \emph{Kriging}.\\
+
+La aparición de leucemias no tiene una única causa. Existen coincidencias entre investigadores especializados que definen los distintos tipos de leucemia como el producto de la interacción conjunta de muchos factores. Los factores que intervienen pueden ser ocasionados por las características genéticas, ambientales o constitucionales de un individuo. Dichas interacciones involucran un fenómeno complejo que puede ser estudiado desde diversas perspectivas.\\
+
+En este trabajo se analiza la ocurrencia de muertes por leucemia en niños y jóvenes desde una perspectiva espacial, motivando a la interpretación sobre lo que sucede en lugares donde el porcentaje de muertes asociadas a esta enfermedad pudiera explicarse por factores ambientales, o por la combinación de causas que traen como consecuencia un patrón espacial.\\ 
+
+Adicionalmente, es importante hacer énfasis en que los patrones de mortalidad por leucemias podrían estar asociados a deficiencias en el sistema de salud para atender de forma temprana la enfermedad, y por tanto, registrar tasas de mortalidad por leucemias en niños y jóvenes altas en ciertas regiones del país. Estos casos podrían asociarse con el acceso limitado a servicios de salud, o en general, con las condiciones de desarrollo por debajo de los indicadores nacionales. La relación entre las posibles causas de la mortalidad estudiada va más allá del propósito del presente estudio, sólo se busca identificar patrones espaciales que sirvan como insumo para estudios epidemiológicos concretos y desarrollar una aplicación de métodos analíticos para la salud pública.\\
+
+La estructura de este trabajo es la siguiente:\\
+
+En el primer capítulo se da el contexto de la relevancia del estudio de padecimientos que generan altas tasas de mortalidad en niños y jóvenes. A partir de la evidencia capturada en datos de mortalidad se plantea la oportunidad de explorar y proponer metodologías de análisis que permitan conocer con detalle los patrones espaciales y temporales en la ocurrencia de padecimientos importantes que afectan a la población mexicana. En particular, a la población de estudio que comprende los registros de mortalidad en niños y jóvenes de entre 1 y 19 años de edad.\\
+  
+En el segundo capítulo, a través de un análisis exploratorio de datos se describen las características más importantes de la información recopilada por el Instituto Nacional de Estadística y Geografía (INEGI) y la Secretaría de Salud (SS).\\
+  
+La tercera parte del trabajo consiste en describir la metodología para el análisis de datos referenciados geográficamente para construir un modelo que permita hacer predicciones espaciales mediante la interpolación de Kriging. Para la aplicación del método propuesto, se requiere ajustar un modelo que permita describir las variaciones a pequeña escala para identificar la correlación espacial basada en la distancia.\\
+
+En el capítulo cuarto se reportan los principales hallazgos de la investigación, así como la interpretación de resultados que formarán parte de las recomendaciones generadas por el presente estudio basadas en la evidencia que nos revelen los datos.  Se ajusta un modelo del variograma empírico mediante validación cruzada para fines predictivos y se hace la predicción espacial del fenómeno mediante interpolación de Kriging.\\
+  
+Finalmente, en el último capítulo se resumen los resultados de la investigación y de la aplicación de métodos y técnicas abordados desde la perspectiva de ciencia de datos y su aplicación para iniciativas relacionadas con el sector de la salud en la población de estudio.\\
+
+Desde la perspectiva de la ciencia de datos, es posible generar hallazgos que permitan desarrollar líneas de investigación o casos de utilidad para distintos fenómenos que se modelan mediante representaciones abstractas, inmersas en registros estructurados conocidas como bases de datos. La aportación que busca generar el presente trabajo es identificar alguna de esas líneas de trabajo en aplicaciones de relevancia en la salud pública de México.\\ 
+
+Este trabajo se desarrolló durante la estancia de investigación en el Centro de Análisis de Datos para la Salud (CADSalud).
+
+%----------------------------------------------------------------------------------------
+%	TABLA DE CONTENIDOS
+%---------------------------------------------------------------------------------------
+\let\cleardoublepage\clearpage
+\tableofcontents
+
+
+%----------------------------------------------------------------------------------------
+%	TESIS
+%----------------------------------------------------------------------------------------
+\mainmatter %empieza la numeración de las páginas
+\pagestyle{headings}
+
+
+%----------------------------------------------------------------------------------------
+%  INTRODUCCION
+%----------------------------------------------------------------------------------------
+\let\cleardoublepage\clearpage
+\chapter{Introducción}
+De acuerdo con la Organización de las Naciones Unidas (o simplemente Naciones Unidas), el desarrollo sustentable de un país se relaciona con las acciones que promueven el bienestar de las personas que lo conforman. En ese sentido, uno de los objetivos internacionales promulgados por Naciones Unidas está centrado en reducir la mortalidad infantil, definida por la Organización Mundial de la Salud (OMS) como el número de defunciones por lugar, intervalo de tiempo y causa en los niños menores de 5 años.\\
+
+El riesgo de mortalidad es mayor en los niños que todavía no cumplen su primer año de vida \cite{OMS1}. A nivel internacional se ha logrado disminuir un 53\% de 1990 a 2015 la mortalidad en menores de 5 años, sin embargo, es importante conocer las causas de las defunciones para focalizar las estrategias que nos permitan orientar las políticas públicas que fomentan el desarrollo de un país.\\
+
+Los adolescentes menores de 20 años por su parte, son un grupo de la población que se supone sano de acuerdo con los reportes de la OMS \cite{OMS2}, sin embargo, existen muertes prematuras debido a cuestiones sociales en las que se desarrollan los jóvenes, como pueden ser la violencia e inseguridad en donde viven, y en algunos casos las causas de la defunción se atribuye a enfermedades que de ser detectadas de forma oportuna pueden ser prevenibles o tratables.\\
+
+En México, el Instituto Nacional de Geografía y Estadística (INEGI) publica estadísticas de mortalidad a nivel acta de defunción. Al consolidar los datos disponibles de 1990 a 2014 se tienen 12,211,486 registros de difuntos por causa de muerte y factores temporales y espaciales para su identificación y análisis.\\ 
+
+En general, la mortalidad es un fenómeno complejo que interactúa en la dinámica demográfica y la calidad de vida de las personas, por tanto, el análisis de la distribución espacial y temporal de la mortalidad puede entenderse como un indicador de las condiciones en las que se desarrolla una sociedad en términos de salud pública\footnote{La OMS considera como indicadores de salud los instrumentos de evaluación de políticas públicas para mejorar las condiciones de vida de una población. Entre estos indicadores se encuentran las tasas de mortalidad por edades.}.\\
+
+El objeto de estudio del presente trabajo son las defunciones registradas entre los niños de 1 a 19 años, para los cuales sólo en 2014 las principales causas de muerte se muestran en la siguiente tabla:\\
+
+\begingroup
+    \fontsize{10pt}{12pt}\selectfont
+	\begin{center}
+	   \begin{tabular}{ | p{6cm} | c |}
+	    \hline
+	    \textbf{Causa de la muerte} & \textbf{Porcentaje de casos} \\ \hline
+		Accidentes de tráfico de vehículos de motor & 12.04 \\ \hline
+		Agresiones (homicidios)                     & 9.35 \\ \hline
+		Leucemias                                   & 5.98 \\ \hline
+		Los demás accidentes y efectos tardíos      & 5.29 \\ \hline
+		Lesiones autoinfligidas intencionalmente    & 5.19 \\ \hline		
+		Malformaciones congénitas del sistema circulatorio & 4.25 \\ \hline
+		Ahogamiento y sumersión accidentales        & 3.83 \\ \hline
+		Neumonía                                    & 3.61 \\ \hline
+		Parálisis cerebral y otros síndromes paralíticos   & 3.35 \\ \hline
+		Eventos de intención no determinada         & 2.21 \\ \hline		
+	    \end{tabular}
+		\captionof{table}{Principales causas de muerte en la población de estudio para 2014.}
+	\end{center}
+\endgroup
+
+Las 10 causas de muerte mencionadas representan más de la mitad de las defunciones registradas para la población objetivo (55\%) en 2014, al separar en dos grupos de edad: niños de 5 años o menos y adolescentes entre 6 y 19 años las causas son distintas:
+
+\begin{itemize}
+	\item Niños:
+\begin{itemize}
+  \item Malformaciones congénitas del sistema circulatorio: 7.72\%
+  \item Neumonía: 7.72\%
+  \item Accidentes de tráfico de vehículos de motor: 6.43\%
+  \item Los demás accidentes y efectos tardíos: 6.10\%
+  \item Leucemias: 4.97\%
+\end{itemize}
+	\item Adolescentes:
+\begin{itemize}
+  \item Accidentes de tráfico de vehículos de motor: 14.42\%
+  \item Agresiones (homicidios): 12.37\%
+  \item Lesiones autoinfligidas intencionalmente: 7.40\%
+  \item Leucemias: 6.40\%
+  \item Los demás accidentes y efectos tardíos: 4.94\%
+
+\end{itemize}
+\end{itemize}
+
+Se puede observar que para el grupo de niños la primera causa de muerte tiene causas genéticas, mientras que la neumonía se origina por la presencia de un agente infeccioso. Las siguientes causas de muerte son factores sociales al tratarse de accidentes, mientras que la quinta causa de muerte son las leucemias. En el caso de los adolescentes, las principales causas de muerte son sociales excepto por las muertes asociadas a leucemias.\\
+
+Las frecuencias mencionadas hacen evidente la coincidencia de muertes asociadas a leucemias como principal factor de riesgo en la población de estudio, de esta forma nos enfocamos en el presente trabajo a buscar patrones espaciales que nos permitan identificar zonas con mayor prevalencia de muerte por esta causa multifactorial.\\
+
+
+\section{Contexto.}
+El término “leucemia” se utiliza para denominar los tipos de cáncer que afectan a los glóbulos blancos en la sangre. En presencia de leucemias, la médula ósea produce grandes cantidades de glóbulos blancos anormales. Estos glóbulos blancos se acumulan en la médula e inundan el flujo sanguíneo, pero no pueden cumplir adecuadamente la función de proteger al cuerpo contra enfermedades puesto que son defectuosas \cite{cancer}.\\
+
+En conjunto, los distintos tipos de leucemia son responsables de aproximadamente el 25\% de los cánceres infantiles, sin embargo, las probabilidades de cura son altas si se identifica en etapas tempranas del padecimiento\footnote{De acuerdo con la \emph{American Cancer Society} las tasas de supervivencia a cinco años actuales varían del tipo de leucemia, mayores a 85\% en las más comunes y mayores a 50\% en la menos comunes para las cuales resulta más difícil encontrar tasas de supervivencia precisas \cite{cancer}}.\\
+
+Independientemente de las tasas de supervivencia entendidas como el porcentaje de pacientes que viven un determinado tiempo después de que se les diagnostica una enfermedad, es importante caracterizar a la población de estudio en torno a las principales causas de muerte en función de la ocurrencia de eventos, ya que como se concluye en \cite{rizo}: 
+
+\begin{center}
+\emph{La  mortalidad  por  leucemias  en  menores  de  20  años  representa  un  problema  de  salud pública nacional.}\\ 
+\end{center}
+
+Si analizamos el número de casos totales de registros administrativos de defunciones en la población de niños y jóvenes entre 1 y 19 años se puede observar que la tendencia es decreciente en el número de decesos, lo cual paracería un buen indicador para determinar la eficacia de las políticas públicas en torno a la salud de los niños y jóvenes mexicanos.\\
+
+Por otro lado, al separar las causas y concentrarnos en el número de defunciones causados por leucemias en la misma población  se observa un comportamiento creciente que se ha estabilizado en los últimos años.\\ 
+
+En la \emph{Figura \ref{fig1y2.anio}} se puede observar la tendencia sobre el total de casos de defunciones por año y las defunciones asociadas a leucemias en niños y jóvenes entre 1 y 19 años. La tendencia se construye mediante un ajuste polinomial por mínimos cuadrados ponderados para evidenciar la tendencia descrita previamente.\\
+
+\begin{figure}[ht]
+	\begin{subfigure}{.5\textwidth}
+	  \centering
+	  \includegraphics[width=1.0\linewidth]{graphs/gg01totdef.png}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+	  \centering
+    \includegraphics[width=1.0\linewidth]{graphs/gg02totleu.png}
+	\end{subfigure}
+  \caption{Tendencia de total de defunciones en niños y jóvenes en México desde 1990 hasta 2014.}
+  \label{fig1y2.anio}
+\end{figure}
+
+A partir de las variaciones en el total de defunciones en la población de interés y la prevalencia de muerte ocasionada por leucemias, se puede observar que en los últimos 15 años entre 5 y 6 defunciones de cada 100 menores se atribuyen a leucemias en México. Sin embargo, es importante considerar las variables que potencializan la gravedad del padecimiento de acuerdo con los estudios realizados por los expertos.\\   
+
+Para tal propósito, la \emph{American Cancer Society} clasifica los tipos de leucemia según el grado de evolución de la enfermedad: las leucemias agudas crecen rápidamente, mientras que las leucemias crónicas tienen una tasa de crecimiento menor.\\ 
+
+Se llaman leucemias linfocíticas\footnote{Se pueden dividir los tipos de leucemia linfocítica en grupos con base en el inmunofenotipo de la leucemia, es decir el tipo de linfocito (células B o células T) de donde las células leucémicas provienen.} las que se originan en los linfocitos en la médula ósea y mieloides cuando surgen a partir de las células mieloides que forman los glóbulos blancos (que no son linfocitos), los glóbulos rojos o las plaquetas. Hay leucemias poco comunes que tienen como origen tanto las células mieloides como los linfocitos, a este tipo de leucemias se les conoce como de linaje \emph{híbrido o mixto}.\\
+
+En relación al tipo de leucemia por el origen del cáncer, existen \textbf{factores de pronóstico} que ayudan a los médicos a decidir si un niño con leucemia debe recibir un tratamiento convencional o uno más intensivo para mejorar sus probabilidades de supervivencia.  Los factores de pronóstico parecen ser más importantes en la leucemia linfocítica aguda (ALL) que en la leucemia mieloide aguda (AML), sin embargo en ambos casos, los factores de pronóstico dependen de pruebas de laboratorio (conteo inicial de glóbulos blancos) y de características sociodemográficas como son edad, sexo y raza o grupo étnico al que pertenecene\footnote{Las principales covariables en los análisis de supervivencia de leucemia involucran edad al momento del diagnóstico, sexo, raza, resultados de  pruebas de laboratorio, y riesgo citogenético\cite{cancer}.}:
+
+\begin{itemize}
+  \item[(a)] \textbf{Edad al momento del diagnóstico:} Los niños entre las edades de 1 a 9 años con ALL de células B suelen tener mejores tasas de curación.
+  \item[(b)] \textbf{Incidencia según el sexo:} Las niñas con ALL pueden tener probabilidades ligeramente más altas de ser curadas que los niños. Conforme los tratamientos han mejorado en los años recientes, esta diferencia ha disminuido.
+  \item[(c)] \textbf{Raza/grupo étnico:} Los niños afroamericanos y los hispanos con ALL tienden a tener una tasa de curación menor que la de los niños de otras razas.
+\end{itemize}
+
+Los factores de pronóstico que se pueden analizar con respecto a los registros administrativos de defunciones, deben guardar una relación con el riesgo de muerte en ciertos grupos vulnerables que se caracterizan sociodemográficamente. Con respecto a la mortalidad en la población de estudio por rangos de edad, se observa en la \emph{Figura \ref{fig4.edad}} que la proporción de defunciones crece hasta el grupo de 5 a 9 años y disminuye en las edades subsecuentes:
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\linewidth]{graphs/gg03propleuedad.png}
+  \caption{Tendencia de proporción de defunciones por leucemias y clasificadas según el rango de edad.}
+  \label{fig4.edad}
+\end{figure}
+
+
+Con relación a la mortalidad, de acuerdo al género a causa de leucemias, se observa una tendencia similar entre hombres y mujeres en el tiempo, sin embargo, la proporción de ocurrencia de muertes para mujeres en los últimos años es ligeramente mayor (\emph{Figura \ref{fig3.sexo}}) en contraste con los factores de riesgo para el pronóstico del tratamiento de la leucemia. Este comportamiento podría sugerir la detección tardía de la enfermedad, ya que de acuerdo con los parámetros del pronóstico, si se detecta a tiempo, las niñas tienen una probabilidad ligeramente mayor de sobrevivencia que los niños. La mortalidad no sigue ese comportamiento, por lo que es claro que el análisis de incidencia de mortalidad por leucemias es distinto a la incidencia de la enfermedad. \\
+
+\begin{figure}[ht]
+	  \centering
+	  \includegraphics[width=0.8\linewidth]{graphs/gg04propleusexo.png}
+  \caption{Tendencia de proporción de defunciones por género.}
+  \label{fig3.sexo}
+\end{figure}
+
+Sobre las diferencias descritas como factores de pronóstico por grupos étnicos, en la base de datos de mortalidad no existen diferencias de raza. La categoría de la mayoría de los registros entraría en mortalidad de hispanos, por lo que todos los casos son comparables sin necesidad de hacer distinción de razas.\\
+
+Los datos de contexto que caracterizan la mortalidad y los factores de pronóstico para el tratamiento de leucemias en niños y jóvenes nos proporcionan información para dimensionar la relevancia del problema, sin embargo, la motivación para hacer un análisis de patrones espaciales de la proporción de defunciones por leucemias en niños y jóvenes entre 1 y 19 años se expone en la siguiente sección.
+
+
+\section{Motivación para el estudio estadístico.}
+
+Los factores de riesgo ambientales influyen en la ocurrencia de una enfermedad debido a la proximidad con fenómenos que potencialmente incrementan la probabilidad de padecer la enfermedad. En el caso de leucemias, los factores de riesgo ambientales son la radiación y la exposición a ciertas sustancias químicas\footnote{Por ejemplo, la exposición a largo plazo de altos niveles de benceno es un factor de riesgo para ALL \cite{cancer}}, que aumentan el riesgo de ocurrencia.\\
+
+Algunos estudios han encontrado relación entre la leucemia en niños y la exposición a pesticidas en los hogares como en \cite{turner} y \cite{monge}, ya sea durante el embarazo o durante los primeros años de la infancia. Además otros estudios han encontrado un posible aumento en el riesgo para las madres con exposición a pesticidas en el lugar de trabajo antes del parto \cite{kumar}. Sin embargo, la \emph{American Cancer Society} en \cite{cancer} afirma que:
+
+\begin{center}
+	\emph{...la mayoría de estos estudios han confrontado limitaciones que impiden generalizar resultados directos para explicar la incidencia de cáncer. Se necesita más investigación para tratar de confirmar estos hallazgos y para proveer información más específica sobre los posibles riesgos.}
+\end{center}	
+
+La \emph{American Cancer Society} en \cite{cancer} enlista otros factores controversiales, inciertos o no comprobados que podrían relacionarse con la incidencia de leucemias en la población. Patrones espaciales podrían tener incidencia en algunos de estos factores: Exposición a campos electromagnéticos, vivir cerca de una planta de energía nuclear, infecciones a temprana edad, edad de la madre cuando nace el niño, antecedentes de uso de tabaco de los padres, exposición fetal a hormonas, exposición a sustancias químicas y a solventes en el lugar de trabajo, contaminación química del agua subterránea.\\
+
+Para identificar los patrones espaciales en la mortalidad por leucemias, se cuentan los registros de defunciones que permiten ubicar la ocurrencia de la defunción a nivel municipio. Las variables espaciales involucran el lugar donde se registró la defunción, el lugar donde residía el difunto y el lugar donde ocurrió el evento.\\
+
+Para ubicar patrones espaciales en las defunciones por leucemia consideraremos la entidad y el municipio de residencia. Al filtrar la base de datos para la población de estudio se tienen 602,794 registros de defunción, de las cuales 3,166 no cuentan con entidad y municipio de residencia dentro del catálogo oficial de entidades y municipios, es decir 0.5\% de los casos se omiten en el análisis\footnote{Los códigos de entidad asociados al 0.5\% mencionado son: 33, 34 y 35, referentes a residencias en Estados Unidos, otros países de Latinoamérica o residencia en cualquier otro país respectivamente.}.\\
+
+En función de la entidad de residencia se pueden observar diferencias en la evolución de muertes por leucemia en nuestra población de estudio. En la \emph{Figura \ref{fig5.ent}} se muestra la tendencia en el número de defunciones por entidad federativa.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.80\linewidth]{graphs/gg05propleuent.png}
+  \caption{Tendencia de la proporción de defunciones por leucemias de acuerdo con la entidad federativa.}
+  \label{fig5.ent}
+\end{figure}
+
+\bigskip 
+
+Para buscar patrones espaciales, utilizaremos regiones que agrupan entidades federativas para identificar las condiciones que nos permitan delimitar la zona de estudio. De acuerdo con el INEGI \cite{INEGI12}, México se divide en 5 mesorregiones que se muestran en la \emph{Figura \ref{fig.6.reg}}:
+
+\begin{center}
+	\emph{...integran información estadística y geográfica en forma homogénea y estandarizada metodológicamente susceptible de ser comparada, con el fin de describir las principales características sociodemográficas y económicas de los estados que conforman cada una de las regiones, de las propias regiones y del país en su conjunto.}
+\end{center}
+
+\begin{figure}[ht]
+    \centering    
+    \includegraphics[width=1.0\linewidth]{graphs/gg06mapreg.png}
+  \caption{Mesorregiones del país de acuerdo con INEGI.}
+  \label{fig.6.reg}
+\end{figure}
+
+La proporción del número de muertes registradas es sensible al número de muertes registradas por el tamaño de la población. Para eliminar el efecto en las defunciones por el tamaño de la población\footnote{Tomamos la población del Censo de Población y Vivienda 2010 (INEGI)}, consideramos el número de defunciones de niños y jóvenes entre 1 y 19 años por cada 1000 habitantes por entidad y comparamos por región (\emph{Figura \ref{fig7.ent}}). Se observa que las regiones del Noreste y del Centro del país son las regiones más homogéneas en el número de defunciones por entidad.\\
+
+\begin{figure}[ht]
+    \centering    
+    \includegraphics[width=1.0\linewidth]{graphs/gg07varreg.png}
+  \caption{Número de defunciones de niños y jóvenes entre 1 y 19 años por cada mil habitantes por entidad federativa y mesorregión.}
+  \label{fig7.ent}
+\end{figure}
+
+En relación a las defunciones de niños y jóvenes entre 1 y 19 años registradas por leucemias entre 1990 y 2014 por mesorregión, podemos observar en la \emph{Figura \ref{fig8.var}} que las mesorregiones más estables en términos de variabilidad de la proporción de defunciones por leucemias son \emph{Noreste} y \emph{Centro-País}. El centro del intervalo es el promedio por mesorregión y el tamaño del intervalo es la desviación estándar de la proporción de defunciones en niños y jóvenes por leucemias agregadas por municipio. El tamaño del centro del intervalo está determinado por la densidad de AGEBS\footnote{El INEGI divide al territorio nacional en áreas con límites identificables en campo, denominadas Áreas geoestadísticas, con tres niveles de desagregación: Estatal (AGEE), Municipal (AGEM) y Básica (AGEB)}, por superficie de cada mesorregión.\\
+
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1.0\linewidth]{graphs/gg08regvarden.png}
+  \caption{Variabilidad en la proporción de defunciones por mesorregión y densidad de AGEBS.}
+  \label{fig8.var}
+\end{figure}
+
+El propósito del presente trabajo es identificar patrones espaciales de defunciones por leucemias en niños y jóvenes. Para conseguir identificar zonas de riesgo en donde la incidencia de este tipo de muertes varía y guarda una relación con la distancia, se requiere visualizar una región densa que pueda modelarse con un proceso continuo que haga evidente el riesgo en la ocurrencia del fenómeno estudiado.\\ 
+
+Por tal razón, la región \emph{Centro-País}, en comparación con el resto de mesorregiones, es la región que se comporta de forma más estable para determinar un modelo de predicción espacial a partir de las mediciones de mortalidad por leucemia tomando como unidades de análisis los centroides de los municipios de la región de interés. En la siguiente sección se caracterizará la región del Centro de la República Méxicana.
+
+\thispagestyle{empty}
+
+
+%----------------------------------------------------------------------------------------
+%  PROBLEMATICA
+%----------------------------------------------------------------------------------------
+
+\let\cleardoublepage\clearpage
+\chapter{Problemática}
+El índice de desarrollo humano (IDH) es un indicador estadístico elaborado por el Programa de las Naciones Unidas para el Desarrollo (PNUD) compuesto por tres parámetros: vida larga y saludable, educación y nivel de vida digno.\\
+
+Los patrones espaciales que influyen en la mortalidad infantil y juvenil por leucemias pueden interpretarse como un descriptivo de condiciones de desarrollo humano por la atención oportuna de la enfermedad\footnote{En \cite{duarte} se corrobora la relación que guarda el estado de salud de una comunidad con la marginación social en la que vive. Las limitaciones en el acceso a servicios públicos (educación, transporte, agua potable), y el sistema de salud, son determinantes estructurales que subyacen a la mortalidad de sus habitantes.}.\\ 
+
+Considerando que en los países desarrollados la mortalidad infantil por leucemias ha disminuido considerablemente en el periodo de estudio \cite{couto}, y que la incidencia en términos generales no ha variado significativamente, el patrón espacial podría interpretarse como un indicador de atención oportuna en los casos identificados de leucemias.\\
+
+Un dato adicional que contribuye al planteamiento de la mortalidad infantil y juvenil por leucemias como indicador de desarrollo es que en México hay 1.1 médicos por 
+cada mil habitantes, un índice por debajo de los estándares marcados por la Organización  Mundial de la Salud (OMS), que establecen que debe haber 3 para satisfacer las necesidades de la población\footnote{En \cite{observatorio} se afirma que \emph{Al  cierre  de  2010  las  fuentes  oficiales  tenían  registro  de  96,242 médicos en  contacto  con  el paciente  en  las  tres  principales  instituciones  públicas,  lo  que  denota  una  relación  de  1.1 médicos por mil habitantes, cifra por debajo del estándar de tres médicos por mil habitantes recomendado  por  la  OMS.}}.\\ 
+
+
+En particular, con cifras del Instituto Nacional de Cancerología\footnote{En entrevista al Dr Abelardo Meneses el 24 de febrero de 2015 al diario Milenio:\\ \url{http://www.milenio.com/cultura/Incan-promueve-oncologia-obligatoria_0_470352971.html}.} en México se cuenta con 1,400 oncólogos aproximadamente a nivel nacional, mientras que los estándares internacionales sugieren un déficit del 30\%. Aunado al déficit de especialistas en cáncer, sólo atienden aproximadamente 100 oncólogos pediatras en todo el territorio nacional y sólo el 50\% son hematólogos pediatras\footnote{Nota publicada el 23 de octubre de 2014 en:\\  \url{http://sipse.com/mexico/mexico-medicos-doctores-inegi-oms-salud-119185.html}}.\\
+
+
+\section{Caracterización de la región de interés.}
+La región centro de la República Mexicana que se analiza en el presente estudio representa el 31.2\% de la población del país de acuerdo con la Encuesta Intercensal 2015 publicada por INEGI\footnote{El resultado del tamaño de la población en México determinada por la \emph{Encuesta Intercensal 2015} es de 119,530,753 de los cuales en la región \emph{Centro-País} residen 37,310,161 habitantes.}. Comprende las entidades de Puebla, Tlaxcala, Hidalgo, Estado de México, Morelos y la Ciudad de México, es decir, el 4.5\% de la superficie continental del país\footnote{De acuerdo con cifras de INEGI, México cuenta con 1,960,189 kilómetros cuadrados de superficie continental, mientras la región \emph{Centro-País} abarca 87,841 kilómetros cuadrados.}.\\ 
+
+Para caracterizar la región centro de México y fortalecer la hipótesis entre la relación de los indicadores de desarrollo humano y la mortalidad infantil y juvenil por causa de leucemias, consideramos variables disponibles en el Sistema Estatal y Municipal de Bases de Datos (SIMBAD) proporcionados por INEGI, que nos permite describir la región en términos sociodemográficos, índices de desarrollo humano, variables económicas y acceso a los servicios de salud.\\
+
+\noindent \textbf{Sociodemográficos:}\\
+\noindent Con respecto a la caracterización sociodemográfica es importante recalcar que se analizará una zona altamente densa con relación a los habitantes por kilómetro cuadrado. La densidad promedio de la zona de interés es de 1,101 habitantes por kilómetro cuadrado\footnote{El promedio de densidad de la zona está altamente influenciado por la densidad de la Ciudad de México (5,920). Quitando a la Ciudad de México el promedio es 255 que sigue estando por encima de la densidad poblacional a nivel nacional.} en contraste con los 57 que se reportan a nivel nacional. En la \emph{Figura \ref{fig.10.densidad}} se muestra la diferencia de densidad de población en escala logarítmica para las entidades que conforman la región de interés.\\
+
+\begin{figure}[ht]
+    \centering    
+    \includegraphics[width=0.9\linewidth]{graphs/gg10logdensidad.png}
+  \caption{Logaritmo natural de la densidad de población por entidad federativa en la región Centro-País.}
+  \label{fig.10.densidad}
+\end{figure}
+
+En particular, al filtrar la población de niños y jóvenes menores a 20 años\footnote{La población de estudio no incluye a los menores de 1 año.}, la \emph{Encuesta Intercensal 2015} de INEGI reporta aproximadamente 43.5 millones de habitantes, mientras que en la región de interés hay 12.7 millones de niños y jóvenes, por lo que la población de estudio representa el 29.3\% del total de niños y jóvenes.\\
+
+\noindent \textbf{Desarrollo humano:}\\
+\noindent Sobre los indicadores de desarrollo humano, se tienen disponibles en el SIMBAD variables relacionadas con servicios básicos, como son disponibilidad de agua entubada, drenaje, electricidad y servicios. En la \emph{Figura \ref{fig.11.desarrollo}} se muestra el promedio de los indicadores mencionados que se resumen en un índice de 0 a 1 por municipio.\\
+
+\begin{figure}[ht]
+    \centering    
+    \includegraphics[width=0.9\linewidth]{graphs/gg11desarrollo.png}
+  \caption{Promedio de indicadores de desarrollo humano.}
+  \label{fig.11.desarrollo}
+\end{figure}
+
+En términos de desarrollo humano, las entidades de Hidalgo y el Estado de México, cuentan con los índices de desarrollo humano más bajos en comparación con las entidades de la región centro del país.\\
+
+\newpage
+
+\noindent \textbf{Economía:}\\
+\noindent La contribución al Producto Interno Bruto de la zona de interés es del 32.3\% de acuerdo con las cifras de 2014, sin embargo, este porcentaje está fuertemente influenciado por la producción del sector terciario o de servicios. En la \emph{Figura \ref{fig.12.pib}} se muestra el PIB en escala logarítmica por entidad de la región centro del país, donde se puede observar que Tlaxcala y Morelos son las entidades federativas menos productivas en la región de interés.\\
+
+\begin{figure}[ht]
+    \centering    
+    \includegraphics[width=0.9\linewidth]{graphs/gg12pib.png}
+  \caption{Logaritmo natural del Producto Interno Bruto por entidad federativa en la región Centro-País.}
+  \label{fig.12.pib}
+\end{figure}
+
+En términos de productividad de las entidades que forman parte de la región centro del país, es importante recalcar la variabilidad que genera incluir a la entidad más productiva (CDMX) y a la menos productiva (TLAX) de todo el país, por lo que otro tipo de variables como la urbanización incluida en el SIMBAD, nos da una noción sobre la economía de los municipios que conforman la región de interés.\\
+
+En general, es una zona fuertemente urbanizada con el 42\% del parque vehicular nacional de acuerdo con cifras de 2014, sin embargo, la longitud de la red carretera disponible en la zona centro, representa sólo el 13\% de los kilómetros disponibles, lo cual significa una densidad de 245 automóviles por kilómetro disponible en la zona, poco más de 3 veces la densidad de automóviles por kilómetro de la red carretera a nivel nacional.\\
+
+\noindent \textbf{Acceso a servicios de salud:}\\
+\noindent En relación a la oferta de servicios de salud, la zona centro cuenta con el 25\% de las unidades médicas del país y el 34\% del personal médico. Del total de la población derechohabiente a servicios de salud, el 30\% reside en la zona centro. El promedio del número de médicos por unidad médica se muestra en la \emph{Figura \ref{fig.13.med}}, dónde se observa que el estado de Puebla e Hidalgo son las entidades de la región de interés con menor acceso a servicios de salud.\\
+
+\begin{figure}[ht]
+    \centering    
+    \includegraphics[width=0.9\linewidth]{graphs/gg13med.png}
+  \caption{Logaritmo natural del promedio del número de médicos por unidad médica por entidad federativa en la región Centro-País.}
+  \label{fig.13.med}
+\end{figure}
+
+
+Comparando las estadísticas de oferta de servicios de salud para cada entidad que forma la zona centro, destaca que el estado de Puebla presenta los valores más bajos de hospitales, médicos y enfermeras por cada mil habitantes en función al catálogo de hospitales que proporciona la Secretaría de Salud a través de la Clave Única de Establecimientos de Salud (CLUES). De la misma forma, la condición de derechohabiencia a servicios de salud también es la más baja, así como el número de consultas por unidad médica.\\
+
+Centrando el análisis en función de la mortalidad observada en los municipios de residencia del centro del país se sintetizan los resultados mediante el análisis exploratorio de datos que se describe en la siguiente sección.\\
+
+
+\section{Análisis exploratorio de datos espaciales.}
+Mediante el análisis exploratorio de la región de estudio es posible conocer los patrones espaciales de la distribución de la variable alatoria definida por la proporción de muertes por leucemias en niños jóvenes menores de 20 años, a quienes denotaremos como población objetivo del análisis.\\
+
+Debido a las variaciones por tamaño de la población por municipio, se corrige mediante un ponderador construido a partir del logaritmo natural de la población del municipio, de tal forma que se evaluarán dos variables que se buscará interpolar a partir de los centroides de los municipios calculado a partir del promedio de las cordenadas geográficas de las AGEBS que conforman cada municipio:
+
+\[Y = \frac{\textrm{Defunciones por leucemia en niños y jóvenes de 1990 a 2014}}{\textrm{Defunciones en niños y jóvenes de 1990 a 2014}}\]
+
+\[Y^{'} = w \times \frac{\textrm{Defunciones por leucemia en niños y jóvenes de 1990 a 2014}}{\textrm{Defunciones en niños y jóvenes de 1990 a 2014}}\]
+donde $w$ es el logaritmo natural de la población en el municipio.\\
+
+
+En la \emph{Figura \ref{fig09y14.y}} se puede observar la distribución espacial de la proporción de muertes por leucemias en niños y jóvenes $(Y)$, así como la misma variable pero corregida por el tamaño de la población del municipio $Y^{'}$.\\
+
+\begin{figure}[!ht]
+	\begin{subfigure}{0.9\textwidth}
+	  \centering
+	  \includegraphics[width=0.9\linewidth]{graphs/gg09propleusinponderar.png}
+	\end{subfigure}%
+	\\\\\\
+	\begin{subfigure}{0.9\textwidth}
+	  \centering
+    \includegraphics[width=0.9\linewidth]{graphs/gg14propleuponderado.png}
+	\end{subfigure}
+  \caption{Distribución de la variable de interés por municipio en la región Centro-País.}
+  \label{fig09y14.y}
+\end{figure}
+
+\newpage
+
+La unidad de análisis son los municipios que conforma la región centro del país: 483 municipios en 6 entidades federativas. Algunas observaciones se pueden derivar de la \emph{Figura \ref{fig09y14.y}}:
+
+\begin{itemize}
+  
+  \item En el caso de la proporción de defunciones históricas por leucemias en niños y jóvenes, el rango de las observaciones varía entre 0\% y 50\%, el valor más alto se encuentra en el municipio de Totoltepec de Guerrero en el estado de Puebla que cuenta con aproximadamente 1,200 habitantes. En contraste, se reportan 32 municipios en Puebla que no reportan defunciones por leucemias en los últimos 25 años.
+  
+  \item Al corregir la proporción por el tamaño de la población, lo que se obtiene es un indicador que oscila entre 0 y 3.53, penalizando la proporción de defunciones por leucemias en niños y jóvenes en aquellos municipios que cuentan con poblaciones muy pequeñas. En este caso, el indicador de muertes por leucemia, crece en los municipios de la Ciudad de México y el Estado de México, que cuentan con las poblaciones más grandes.
+  \item Tanto la distribución de $Y$ como la de $Y^{'}$ presentan un sesgo hacia la derecha como se observa en la \emph{Figura \ref{fig15y16.distry}}. En el caso de $Y^{'}$ la distribución presenta mayor variabilidad en comparación con $Y$.
+  
+  \begin{figure}[ht]
+  	\begin{subfigure}{.5\textwidth}
+  	  \centering
+  	  \includegraphics[width=1.0\linewidth]{graphs/gg15distry.png}
+  	\end{subfigure}%
+  	\begin{subfigure}{.5\textwidth}
+  	  \centering
+      \includegraphics[width=1.0\linewidth]{graphs/gg16distryp.png}
+  	\end{subfigure}
+    \caption{Distribución de $Y$ y $Y^{'}$.}
+    \label{fig15y16.distry}
+  \end{figure}
+  
+  \item No hay un patrón claro para afirmar que sólo la latitud o sólo la longitud sean determinantes para identificar los patrones de proporción de muertes por leucemias en la población de estudio, sin embargo, alrededor de la longitud -98.5 se observan valores altos de mortalidad infantil y juvenil por leucemias tanto en $Y$ como en $Y^{'}$.
+    
+\end{itemize}
+
+Los datos que se analizan para cuantificar la proporción de defunciones por leucemias en niños y jóvenes agregan los datos disponibles de 1990 a 2014. Para identificar variaciones temporales en los patrones espaciales se muestra en la \emph{Figura \ref{fig17.evol}} la evolución del mapa observado por año.\\
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.9\linewidth]{graphs/gg17tiempoy.png}
+  \caption{Evolución de la mortalidad por leucemias en la región de estudio y la población objetivo.}
+  \label{fig17.evol}
+\end{figure}
+
+Se observa variabilidad en algunos años, presentando un número considerable de municipios con altas proporciones de mortalidad por leucemias a partir de 1995 en diversas zonas de la región. Los primeros años registrados no presentan proporciones altas como en los últimos años.\\
+
+En los años incluidos en el estudio se identifican correlaciones espaciales que determinan patrones de proporción de defunciones por leucemias en la población de estudio.\\ 
+
+Las correlaciones espaciales basadas en la variabilidad en función de la distancia fueron estudiadas por George Matheron en los años sesenta del siglo XX. Las contribuciones de Matheron en el campo de la geoestadística están fundamentadas en aplicaciones a la geología para hacer predicciones en la evaluación de reservas de minas para la explotación de metales valiosos. En concreto, la geoestadística tiene como propósito centrar su estudio en el análisis y la modelación de la variabilidad espacial en ciencias de la tierra \cite{cressie}, sin embargo, se han utilizado las nociones de correlación espacial para determinar estudios para guiar patrones espaciales en fenómenos epidemiológicos. En nuestro caso, las tasas de mortalidad analizadas desde una perspectiva espacial podrían tener relación con dos fenómenos descritos previamente:
+
+\begin{itemize}
+  \item Prevalencia de la enfermedad por posibles causas ambientales.
+  \item Acceso a servicios oportunos para el tratamiento de la enfermedad.
+\end{itemize}
+
+En la siguiente sección se plantea la estrategia de análisis que nos permitirá detectar las correlaciones espaciales que darán como resultado la interpolación determinada por la cercanía a puntos con altas tasas de prevalencia de mortalidad infantil y juvenil por leucemias.
+
+\thispagestyle{empty}
+%----------------------------------------------------------------------------------------
+%  METODOLOGIA
+%----------------------------------------------------------------------------------------
+
+\chapter{Metodología}
+Los resultados del análisis descriptivo en la región de interés sugieren que la variabilidad espacial en la mortalidad por leucemias en la población objetivo conduce a la identificación de patrones espaciales que nos explican los altos índices de mortalidad en algunos municipios agrupados por distancia.\\ 
+
+La aplicación de las correlaciones espaciales nos permite identificar zonas de prevalencia por enfermedades mortales y su atención para evitar altas tasas de mortalidad mediante la atención oportuna. A través de este tipo de análisis, se busca incrementar la eficiencia y efectividad del sistema de salud mejorando uno de los principales indicadores con los que se evalúan las estrategias de salud pública.\\
+
+El planteamiento del modelo espacial toma como unidad de análisis los municipios que conforman la región de interés y supone que la variabilidad en la variable de interés guarda una relación con la distancia en cualquier punto y en cualquier dirección. A partir de esta relación es posible identificar patrones espaciales para la interpolación y predicción de mortalidad infantil y juvenil por leucemias en cualquier punto de la región estudiada.\\
+
+Para identificar las posibles correlaciones espaciales, se sigue una metodología de análisis estándar para predecir fenómenos con correlación espacial continua mediante interpolación de Kriging. Para llegar a este propósito se seguirá la siguiente estrategia analítica:\\
+
+\begin{itemize}
+  \item[\textbf{3.1.}] \textbf{Análisis estructural.} Se refiere a la caracterización de la estructura espacial de un fenómeno regionalizado. Es el proceso en el marco del cual se obtiene un modelo geoestadístico para la función aleatoria que se estudia.
+  \item[\textbf{3.2.}] \textbf{Análisis de anisotropía.} Uno de los supuestos importantes para hacer predicciones espaciales mediante la interpolación de Kriging es que se modela un fenómeno isotrópico, es decir, que las variaciones espaciales son independientes de la dirección en la que se analice el fenómeno.
+  \item[\textbf{3.3.}] \textbf{Ajuste de semivariograma.} Se utilizan metodologías de aprendizaje de máquina para establecer un modelo que explique la correlación espacial del fenómeno de interés.
+  \item[\textbf{3.4.}] \textbf{Interpolación de Kriging.} Se utilizan datos espaciales que representen una región en la que el fenómeno se pueda presentar de forma continua\footnote{De acuerdo con \cite{mitasova} la interpolación de regiones a superficies están diseñadas para transformar datos asignados a polígonos, en nuestro caso municipios, en superficies continuas, representadas por una imagen en mapa de bits (raster) de alta resolución. Este tipo de aplicaciones es común en fenómenos sociales y económicos.}. Con estos datos se genera un campo continuo\footnote{Campo aleatorio continuo: Generalización de un proceso estocástico tal que los parámetros subyacentes no necesariamente están etiquetados en el tiempo, sino en vectores multidimensionales.} que determinará las mediciones del fenómeno estudiado\footnote{La forma en la se determina es mediante los datos observados no ruidosos de mortalidad por municipio de residencia del difunto}.
+\end{itemize}
+
+Los fundamentos teóricos que sustentan la metodología de análisis espacial planteada al fenómeno de mortalidad por el padecimiento específico descrito previamente se basa en conocer los efectos que se pueden explicar como tendencia espacial y variaciones a pequeña escala en presencia de isotropía. Para comprender el significado de los conceptos mencionados, en las siguientes secciones se definen los conceptos aplicados de estadística espacial.\\
+
+\section{Análisis estructural.}
+Se define como dominio $\mathcal{D}$ la región del centro de la República Mexicana descrita en las secciones anteriores. Cada centroide de los municipios que forman $\mathcal{D}$ serán los puntos de observación $s\in \mathcal{D}$ que se conocen como \emph{índice espacial}\footnote{El planteamiento teórico del análisis estructural está basado en \cite{cressie}}.\\
+
+El proceso estocástico que determina la ocurrencia de cierta proporción de defunciones por leucemias en niños y jóvenes se denotará por
+
+$$\{Z(s): s\in\mathcal{D}\}.$$
+
+\bigskip
+
+La variable aleatoria $Z$ está definida en la retícula generada por los centroides de los municipios. De esta forma, las observaciones son un número finito de mediciones poco ruidosas que definen realizaciones incompletas del campo aleatorio definido por la proporción de mortalidad atribuída a leucemias en la población de estudio denotadas por: 
+
+$$\{z(s_1),\ldots,z(s_n)\}.$$
+
+\bigskip
+
+Dicho de otra forma, cada $z(s_i)$ es $Y_i$ o $Y_i^{'}$ mencionada en el capítulo anterior.\\
+
+Para especificar al proceso espacial $Z(s)$, es posible separar la ocurrencia del fenómeno en un componente sistemático y un componente aleatorio, cuya realización depende de la retícula observada, de tal forma que para cualquier $s\in\mathcal{D}$ se satisface:
+
+$$Z(s) = \mu(s) +  \eta(s).$$
+
+\begin{itemize}
+  \item A la parte sistemática se le llama \emph{tendencia espacial} o \emph{deriva} $\mu(s)$ y explica la variación a gran escala en el proceso espacial $Z(s)$ que puede ser explicada por covariables.
+  \item El componente aleatorio $\eta(s)$ explica la varianza a pequeña escala y se refiere a la correlación espacial basada en la distancia.
+\end{itemize}
+
+\bigskip
+
+Para estimar la tendencia espacial se ajusta un modelo con covariables significativas definido por:
+
+$$Z(s)=X(s)^T\mathbf{\beta}+\eta(s)$$
+
+\noindent donde $\mathbf{\beta}$ es un vector con las contribuciones de las variables que explican $\mu(s)$.\\
+
+En relación al componente aleatorio no explicado por el componente sistemático, se requiere analizar el proceso espacial que nos dará las variaciones de pequeña escala $\eta(s)$, sin embargo, para lograr la correcta interpolación del campo aleatorio completo, se requiere que el proceso estocástico sea estacionario.\\
+
+Un \textbf{proceso estocástico es estrictamente estacionario} en $\mathcal{D}$ si y sólo si su función de distribución es invariante ante traslaciones, lo cual significa que dada una colección $s_1,\ldots,s_n$ definidas en una región $\mathcal{D}\subset\mathbb{R}^d$ (usualmente $d=2$) tales que $n<\infty$, satisfacen que: 
+
+$$F[Z(s_1),\ldots,Z(s_n)] = F[Z(s_1+h),\ldots,Z(s_n+h)], \quad \forall h \in \mathbb{R}^d$$
+
+\bigskip 
+
+Dicho supuesto es muy estricto y en el caso del proceso estocástico definido por la ubicación de incidencias de mortalidad, la probabilidad acumulada en cada punto varía considerablemente. Por tal razón, usualmente se trabaja sólo con los momentos hasta de segundo orden, de donde se definen los \textbf{procesos intrínsecamente estacionarios} (de segundo orden) si cumplen que:
+
+\begin{itemize}
+  \item El valor esperado del componente aleatorio no depende de $s$: 
+  $$E[\eta(s)] = 0, \quad \forall s\in \mathcal{D}.$$
+  
+  \bigskip
+  
+  \item Para cualquier par de variables $\eta(s)$ y $\eta(s+h)$, su covarianza existe y sólo depende del \textbf{vector de separación} $h$:
+  $$C(h)\equiv C[\eta(s),\eta(s+h)] = E[\eta(s)\eta(s+h)].$$
+\end{itemize}
+
+\bigskip
+
+La estacionariedad de la varianza implica que la varianza existe, es finita y no depende de $s$, es decir 
+
+$$\sigma_{\eta}^2=C(0)=\textrm{Var}[\eta(s)].$$
+
+\bigskip
+
+Se define el semivariograma entre dos puntos $s_i$ y $s_j$ y se denota por $\gamma(s_i,s_j)$ como:
+
+$$\gamma(s_i,s_j) = \frac{1}{2}\textrm{Var}[\eta(s_i)-\eta(s_j)].$$
+
+\bigskip 
+
+Si se satisface la estacionariedad de la varianza entonces se satisface la estacionariedad del variograma $2\gamma(\cdot,\cdot)$, es decir:
+
+$$\gamma(h) \equiv \gamma[\eta(s),\eta(s+h)] = \frac{1}{2}E\left[\left(\eta(s+h)-\eta(s)\right)^2\right],$$
+
+\noindent que se conoce como \emph{hipótesis intrínseca}. Por tanto, un proceso estacionario de segundo orden satisface la hipótesis intrínseca y su variograma cumple la relación
+
+$$\gamma(h) = C(0)-C(h)$$
+
+\bigskip
+
+La estimación del variograma nos dará una noción del grado de dependencia espacial de la mortalidad por leucemias en la población de estudio. Para lograr la estimación se calcula el semivariograma empírico\footnote{El semivariograma empírico es una estimación de $\gamma$ con los datos observados.}, cuya interpretación se basa en los siguientes tres parámetros:
+
+\begin{itemize}
+  \item[\textbf{a)}] \textbf{Pepita (\emph{nugget} o $\tau^2$).} Representa la discontinuidad en el semivariograma para distancias que sean menores que la menor distancia dada entre los puntos observados. Esta discontinuidad se puede dar también debido a errores en la medición o a una pobre precisión analítica\footnote{Es el punto en el que comienza la relación entre la distancia y la variación de las observaciones.}.
+  \item[\textbf{b)}] \textbf{Meseta (\emph{sill} o $\sigma^2$).} Es el valor máximo que alcanza el semivariograma cuando la variable es estacionaria o intrínsecamente estacionaria.
+  \item[\textbf{c)}] \textbf{Rango (\emph{range} o $\phi$).} Es la distancia a la cual el variograma se estabiliza y las muestras se relacionan espacialmente.
+\end{itemize}
+
+Para conocer la correlación espacial de las variaciones a pequeña escala, se utilza el semivariograma empírico omnidireccional\footnote{Es el semivariograma empírico que aplica para cualquier dirección.} cuando la orientación de las semivarianzas dependen sólo del vector de separación y no de la orientación. La estimación del semivariograma empírico depende de una partición del espacio en todas sus diferencias $\mathcal{H}=\{s_i-s_j:s_i,s_j\in \mathcal{D}\}$ llamada clase y denotada por $B_m$.\\ 
+
+Se calculan las diferencias $s_i-s_j$ para $i\neq j$ y se asigna a una clase. Al obtener el promedio de las diferencias en cada clase, se determina la distancia en la clase $h_m$ para finalmente contar el número de puntos $(s_i,s_j)$ cuya separación se clasifica en determinada clase y así poder contar el número de pares que pertenecen a la clase $N(h_m)$.\\
+
+La estimación del semivariograma $\hat{\gamma}$ se obtiene ajustando la forma del semivariograma empírico determinado por:
+
+$$\hat{\gamma}(h_m) = \frac{1}{2N(h_m)}\sum_{N(h_m)}(\hat{\eta}(s_i)-\hat{\eta}(s_j))^2.$$
+
+\bigskip
+
+En la \emph{Figura \ref{semivariograma}} se observa la forma que toma un variograma en función de los parámetros descritos previamente:
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\linewidth]{graphs/gg18ejemplovarig.png}
+  \caption{Estructura de un variograma a partir de los parámetros que lo componen (ejemplo ilustrativo).}
+  \label{semivariograma}
+\end{figure}
+
+Si utilizamos el semivariograma omnidireccional supondremos que la mortalidad por leucemias en la población de estudio se modela mediante un proceso isotrópico, es decir, un proceso intrínsecamente estacionario, cuyo semivariograma depende únicamente del vector de separación $h$ y no de la tolerancia en la dirección en la que se calculan las distancias.\\ 
+
+Para generar un modelo de predicción espacial en presencia de anisotropía, se requiere modificar el semivariograma en función de transformaciones a los ejes para construir un modelo de predicción espacial. En la siguiente sección se analiza la anisotropía del semivariograma empírico.
+
+\bigskip
+
+\section{Análisis de anisotropía.}
+En general, la anisotropía es una propiedad asignada a una medición en la que las características son diferentes en función de la dirección en la que se analiza\footnote{El procedimiento de corrección de anisotropía utiliza el paquete \emph{geoR} de los autores de \cite{diggle}}. En el caso del semivariograma, es necesario estimar las correlaciones espaciales de las variaciones de pequeña escala en distintas direcciones. \\ 
+
+Existen dos tipos de anisotropía, la \textbf{anisotropía geométrica} y la \textbf{anisotropía zonal}. La anisotropía geométrica ocurre cuando el rango varía con la dirección del variograma, pero la meseta se mantiene constante, mientras que la anisotropía zonal ocurre cuando tanto el rango como la meseta varían con la dirección del variograma. En la \emph{Figura \ref{aniso.zonal}} se muestra un ejemplo de anisotropía zonal, ya que varía tanto la meseta como el rango.\\
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\linewidth]{graphs/gg19ejemploanis.png}
+  \caption{Ejemplo ilustrativo de anisotropía zonal en dos direcciones $X$ y $Y$.}
+  \label{aniso.zonal}
+\end{figure}
+
+La \emph{corrección por anisotropía} consiste en la reparametrización o estandarización de la separación de los municipios que conforman la región de estudio en cada dirección tal que el grado de continuidad espacial en la mortalidad infantil y juvenil es equivalente en términos de la distancia en todas las direcciones.\\
+
+En presencia de anisotropía geométrica, el comportamiento de los semivariogramas es distinto en función de la dirección en la que se construya el semivariograma, de tal forma que:
+
+$$\hat{\gamma}(h) = \hat{\gamma}^{\circ}(\|Ah\|),$$ 
+\noindent para alguna transformación $A \in \mathbb{R}^{2\times 2}$ y $\hat{\gamma}^{\circ}$ una función real.
+
+\bigskip
+
+Es necesario corregir la anisotropía para que los modelos del variograma teórico que se utiliza en la interpolación de Kriging se modelen con base en un variograma omnidireccional isotrópico con un rango común en todas las direcciones.\\
+
+Si el rango en la dirección $x$ denotado por $r_x$ y el rango en la dirección $y$ denotado por $r_y$ difieren con respecto a la separación $h=(h_x,h_y)$ la corrección por anisotropía consiste en una rotación de ejes determinada por las razones tanto en longitud como en latitud en función de las direcciones que presentan mayor distancia en el rango:
+
+$$h_x/r_x \textrm{ y } h_y/r_y$$
+
+\bigskip
+
+La rotación que corrige la anisotropía geométrica permitirá que los semivariogramas direccionales empíricos puedan ser modelados mediante la misma estimación del semivariograma.\\
+
+Una vez aislado el efecto deriva de la tendencia espacial y la anisotropía de las variaciones en pequeña escala, resta hacer la estimación de los parámetros que nos darán el semivariograma para entrenar un modelo que nos permita hacer predicción espacial de la mortalidad en niños y jóvenes en la zona de estudio. 
+
+\bigskip
+
+\section{Ajuste de semivariograma.}
+El objetivo de ajustar un semivariograma empírico es aplicar un proceso que satisface la hipótesis de estacionariedad intrínseca, sin embargo, hay razones prácticas para buscar un semivariograma paramétrico, que nos permite suavizar la semivarianza y lograr la interpolación en puntos no observados, es decir en las ubicaciones cercanas a los centroides de los municipios.\\
+
+A partir de la propiedad monótona no-decreciente de la distancia y del comportamiento observado en el semivariograma empírico\footnote{El semivariograma empírico se debe ajustar a un modelo cuyo comportamiento permita conocer la variabilidad en función de la cercanía de cualquier punto.}, existen varias opciones de modelos de semivariogramas parámetricos que representan las variaciones en pequeña escala con distintos valores de pepita, meseta y rango que ajustan al semivariograma empírico minimizando el error cuadrático medio de sus estimaciones.\\ 
+
+En la \emph{Figura \ref{fig17.varpam}} se observan algunos ejemplos de distintos comportamientos de semivariogramas paramétricos que nos permiten ajustar los datos de un semivariograma empírico. Los ejemplos fueron tomados de \cite{diaz_itam}.\\
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Img/im17varpam.png}
+  \caption{Ejemplos de modelos de semivariogramas paramétricos.}
+  \label{fig17.varpam}
+\end{figure}
+
+En el modelo \textbf{Exponencial} la relación entre la variabilidad y la distancia es creciente, en este caso el rango puede ser un valor alto. Por otro lado, en el modelo \textbf{Esférico} la variabilidad aumenta considerablemente más rápido en las zonas más cercanas y es prácticamente constante en puntos muy cercanos, es decir, el rango puede ser muy pequeño. En el \textbf{Gaussiano} la variabilidad va creciendo de forma suave, mientras que en el modelo \textbf{Lineal} la variabilidad crece a una tasa constante.\\
+
+Las formas analíticas de algunos semivariogramas utilizados comúnmenteson:
+
+\begin{itemize}
+  
+  \item Esférico 
+   $$
+   \gamma(h) = 
+   \begin{cases} 
+      \tau^2 + \sigma^2 \left[\frac{3}{2}\left(\frac{h}{\phi}\right)+\frac{1}{2}\left(\frac{h}{\phi}\right)^3\right], & 0\le h \le \phi \\
+      \tau^2 + \sigma^2, & h>\phi
+   \end{cases}
+   $$
+  
+  \item Exponencial
+   $$
+   \gamma(h) = \tau^2 + \sigma^2 \left[1-\textrm{exp}\left(-\frac{h}{\phi}\right)\right]
+   $$
+  
+  \item Gaussiano
+   $$
+   \gamma(h) = \tau^2 + \sigma^2 \left\{ 1-\textrm{exp} \left[ \left( -\frac{h}{\phi} \right)^2 \right] \right\}
+   $$
+  \item Lineal
+   $$
+   \gamma(h) = \tau^2 + \sigma^2 |h|
+   $$
+  \item Efecto ``pepita puro"
+   $$
+   \gamma(h) = 
+   \begin{cases} 
+      0, & h=0 \\
+      \tau^2, & h>0 
+   \end{cases}
+   $$
+  \item Clase Matérn
+   $$
+   \gamma(\|h\|) = \tau^2 + \sigma^2 \left[
+                            1-\frac{1}{2^{\nu}\Gamma(\nu)}
+                            \left(\frac{2\|h\|\sqrt{\nu}}{\phi}\right)^{\nu}
+                            \mathcal{K}_{\nu}
+                            \left(\frac{2\|h\|\sqrt{\nu}}{\phi}\right)
+                            \right]
+   $$
+   donde $\mathcal{K}_{\nu}$ es una función de Bessel de orden $\nu$ (un parámetro de suavizamiento).
+\end{itemize}
+
+\bigskip
+
+En el caso de la mortalidad por leucemias en niños y jóvenes para la región de estudio, se probarán distintas alternativas para conseguir buenos ajustes\footnote{La evaluación del ajuste se hace a partir del error cuadrático medio entre los datos del semivariograma empírico y cada uno de los modelos descritos.}.\\ 
+
+Las técnicas para estimar los parámetros del semivariograma teórico que se evaluarán para identificar las variaciones en pequeña escala $\eta(s)$ son:
+
+\begin{itemize}
+  \item \textbf{Mínimos cuadrados.} Se minimiza la relación cuadrática entre el semivariograma empirico y el estimado sobre los parámetros del semivariograma de forma ponderada, dando un mayor peso a las observaciones cercanas. 
+  \item \textbf{Máxima verosimilitud.} Supone una distribución normal del proceso para plantear la verosimilitud y se encuentran los parámetros del semivariograma que maximizan la verosimilitud.
+\end{itemize}
+
+La selección del modelo se obtiene mediante la estrategia de validación cruzada, que usa todos los centroides de los municipios para estimar la variación en pequeña escala. Mediante validación cruzada se omite un municipio y se calcula su proporción de defunciones asociada a leucemias en niños y jóvenes utilizando el resto de los municipios para cada centroide.\\
+
+La utilización de los modelos de tendencia espacial y variación a pequeña escala se sintetiza en el modelo de predicción espacial a partir de la interpolación de Kriging desarrollada en la siguiente sección.
+
+\bigskip
+
+\section{Interpolación de Kriging.}
+El objetivo general de la interpolación de Kriging es predecir mediante una función $g(Z(s_0))=Z(s_0)$ condicional a los datos observados, es decir, algún valor $s_0$ del proceso espacial en las ubicaciones no observadas en los puntos $s_i$.\\ 
+
+La interpolación espacial de Kriging se basa en utilizar una combinación lineal de los datos que minimice el valor esperado de alguna función de pérdida\footnote{Es conveniente utilizar la función de pérdida cuadrática $L(\theta,\hat{\theta})=(\theta-\hat{\theta})^2$ por su relación con el segundo momento del error de estimación \cite{cressie}.} al proponer una predicción. Tales predicciones deben ponderarse por cercanía al valor $s_0$, es decir, los valores $z(s)$ observados cercanos a $s_0$ deben contribuir más a la predicción, esto implica que la dependencia espacial en la semivarianza está basada en los semivariogramas estimados.\\
+
+Consideremos la función de pérdida cuando predecimos $Z(s_0)$ mediante $\hat{Z}(s_0)$ denotada por: 
+
+$$L[Z(s_0),\hat{Z}(s_0)]$$
+
+\bigskip
+
+El predictor óptimo es el que minimiza el valor esperado de la función de pérdida condicionado a las realizaciones del proceso espacial denotadas por $Z=(z(s_1),\ldots,z(s_n))$
+
+$$E[L[Z(s_0),\hat{Z}(s_0)]|Z]$$
+
+\bigskip
+
+La propuesta de predicción $\hat{Z}(s_0)$ es una combinación lineal del tipo:
+
+$$\hat{Z}(s_0)=\sum_{i=1}^n\lambda_i Z(s_i)$$
+
+\bigskip
+
+Por tanto, el verdadero valor del proceso en $s_0$ es $Z(s_0)$ y entonces el error de predicción está definido como:
+
+$$\varepsilon(s_0) = [Z(s_0)-\hat{Z}(S_0)]$$
+
+\bigskip
+
+Se busca minimizar la varianza del error de predicción sujeto a la condición de insesgamiento, es decir:
+
+$$ \min_{\lambda} \quad \quad \textrm{Var}[\varepsilon(s_0)]\quad $$
+$$ \quad \quad \quad \quad \quad \quad \textrm{s.a.} \quad E[\hat{Z}(s_0)] = E[Z(s_0)] = \mu(s_0) $$
+
+\bigskip
+
+La condición de insesgamiento se cumple si $\sum_{i=1}^n\lambda_i=1$ ya que:
+
+\begin{eqnarray*}
+  E[\hat{Z}(s_0)] & = & E\left[ \sum_{i=1}^n \lambda_i Z(s_i) \right] \\
+                  & = & \sum_{i=1}^n \lambda_i E[Z(s_i)] \\ 
+ \end{eqnarray*}
+ 
+\noindent y como $Z(s) = \mu(s) + \eta(s)$ y $\eta(s)$ es un proceso estacionario de segundo orden, entonces se satisface que la deriva o tendencia espacial es $\mu(s) = E[Z(s)]$ para cualquier punto $s \in \mathcal{D}$, entonces:
+
+\begin{eqnarray*}
+  E[\hat{Z}(s_0)] & = & E[Z(s)] \sum_{i=1}^n\lambda_i.
+\end{eqnarray*}
+
+\bigskip
+
+Y por tanto la estimación será insesgada si y sólo si $$\sum_{i=1}^n\lambda_i=1.$$
+
+\bigskip
+
+Para resolver el problema de optimización se utiliza el método de los multiplicadores de Lagrange, al simplificar la función objetivo se cumple que:
+
+\begin{eqnarray*}
+  \textrm{Var}[\varepsilon(s_0)] & = & \textrm{Var}[Z(s_0)-\hat{Z}(S_0)] \\
+                                 & = & \textrm{Var}[Z(s_0)] + \textrm{Var}[\hat{Z}(s_0)]-2\textrm{Cov}[Z(s_0),\hat{Z}(s_0)]\\ 
+                                 & = & \textrm{Var}[Z(s_0)] + \textrm{Var}\left[\sum_{i=1}^n\lambda_iZ(s_i)\right]-2\textrm{Cov}\left[Z(s_0),\sum_{i=1}^n\lambda_iZ(s_i)\right]\\                                  
+ \end{eqnarray*}
+
+Utilizando la notación $C_{ij}$ para la covarianza entre los valores de $Z$ en los puntos muestreados (en nuestro caso centroides de los municipios) y $C_{i0}$ la covarianza de $Z$ en los puntos muestreados y $s_0$, denotando $\sigma_{\varepsilon}^2$ a la función objetivo se cumple que: 
+
+$$\sigma_{\varepsilon}^2 = \sum_{i=1}^n\sum_{j=1}^n\lambda_i\lambda_jC_{ij}-2\sum_{i=1}^n\lambda_iC_{i0} + C(0),$$
+
+\noindent de donde la función lagrangiana $Q$ tiene la siguiente forma:
+
+$$Q=\sum_{i=1}^n\sum_{j=1}^n\lambda_i\lambda_jC_{ij}-2\sum_{i=1}^n\lambda_iC_{i0} + C(0) + 2\mu \left[ \sum_{i=1}^n \lambda_i - 1\right]$$
+
+\bigskip
+
+Finalmente, derivando con respecto a $\lambda_i$ e igualando a cero:
+
+$$\frac{\partial Q}{\partial \lambda_i} = 2\sum_{j=1}^nC_{ij}-2\sum_{i=1}^nC_{i0}+2\mu=0,$$
+\noindent se cumple que:
+
+$$\sum_{j=1}^n\lambda_jC_{ij}+\mu = \sum_{i=1}^nC_{i0}.$$
+
+\bigskip
+
+Dado que $\gamma(h)=C(0)-C(h)$ entonces $$C_{ij}=\sigma_{\eta}^2-\gamma(s_i-s_j),$$ 
+
+\noindent de donde se obtiene el sistema de ecuaciones de Kriging:
+
+  \begin{displaymath} 
+  \begin{pmatrix} 
+	  \gamma(s_1-s_1) & \cdots & \gamma(s_1-s_n) & 1   \\ 
+	  \vdots          & \ddots & \vdots          & \vdots   \\ 
+	  \gamma(s_n-s_1) & \cdots & \gamma(s_n-s_n) & 1   \\ 
+	  1               & \cdots & 1               & 0   	  
+	\end{pmatrix}
+	\begin{pmatrix} 
+	  \lambda_1   \\ 
+	  \vdots \\ 
+	  \lambda_n \\
+	  \mu
+	\end{pmatrix}
+  =
+  \begin{pmatrix} 
+	  \gamma(s_1-s_0)  \\ 
+	  \vdots \\ 
+	  \gamma(s_n-s_0) \\
+	  1
+	\end{pmatrix}
+\end{displaymath}
+
+\bigskip
+
+Finalmente, la interpolación de Kriging consiste en resolver un sistema de ecuaciones que nos dan los coeficientes de la combinación lineal de valores observados que minimizan el error de estimación.\\
+
+
+Dependiendo del patrón espacial en torno a la tendencia $\mu(s)$, existen distintos tipos de interpolación de Kriging que cumplen el supuesto de ser un proceso espacial estacionario de segundo orden y con estructura de covarianza desconocida:
+
+\bigskip
+
+\begin{itemize}
+  \item \textbf{Kriging simple.} La media del proceso $\mu(s)=m$ es conocida para todo $s \in \mathcal{D}$.
+  \item \textbf{Kriging ordinario.} La media del proceso $\mu(s)=m$ es constante en una vecindad, pero el valor $m$ es desconocido.
+  \item \textbf{Kriging universal.} Se refiere a la interpolación de Kriging con deriva o tendencia espacial explicada por covariables, es decir, $\mu(s)=X(s)\beta$ donde $X(s)$ es un vector con $p$ covariables y $\beta$ es el vector de parámetros desconocidos.
+\end{itemize}
+
+\bigskip
+
+En el caso de la mortalidad por leucemias se tiene un modelo lineal para explicar la tendencia espacial, por tal razón se requiere utilizar la interpolación por \textbf{Kriging universal}.\\
+
+El resultado de interpolar la mortalidad en niños y jóvenes por leucemias en la región de estudio, mediante el sistema de ecuaciones de Kriging universal, dará como resultado el campo aleatorio completo que cubre a la región de estudio. El resultado se visualiza en un mapa con curvas de nivel que nos da la predicción de la mortalidad estudiada en cada punto de la región a partir de los datos muestreados e identificados por el centroide de los municipios.\\
+
+\thispagestyle{empty}
+
+%----------------------------------------------------------------------------------------
+%  RESULTADOS
+%----------------------------------------------------------------------------------------
+\chapter{Resultados}
+
+La metodología de análisis espacial, al definir un proceso estocástico en torno a la incidencia de mortalidad por leucemias en los municipios del Centro de México para la población de estudio, nos permite utilizar herramientas de estimación de parámetros para definir el comportamiento de la mortalidad en la zona y los patrones espaciales que nos permitirán hacer interpolación espacial para detectar el campo que representa moverse de un municipio a otro y las zonas que se encuentran entre cada punto observado.\\
+
+Las técnicas de ajuste al semivariograma empírico están basadas en la estimación por mínimos cuadrados y la estimación por máxima verosimilitud, mediante los métodos de estimación descritos se prueban las mejores estimaciones entrenando cada modelo por validación cruzada en cada municipio y finalmente utilizar la interpolación de Kriging universal para proponer el modelo de predicción previa corrección de anisotropía de las variaciones de pequeña escala.
+
+\section{Análisis estructural.}
+
+Una limitación en la aplicación de la incidencia de mortalidad en datos geoestadísticos es la continuidad del fenómeno espacial. En la incidencia de mortalidad por cualquier causa, se supone que podría darse en cualquier punto de la región $\mathcal{D}$, lo cual es difícil suponer que cualquier punto de la región está habitado y es susceptible de observar una defunción. Este supuesto es aplicable a fenómenos cuyas mediciones forman un campo aleatorio continuo que estrictamente no ocurre con las defunciones.\\ 
+
+Sin embargo, como se planteó en el Capítulo 2 del presente estudio, la selección de la región de interés es considerablemente densa en su población y se espera que la correlación espacial nos muestre de forma natural las barreras geográficas donde no se presentan asentamientos humanos y de esta forma la interpolación de la ocurrencia de mortalidad sea una predicción con valores bajos o casi nulos en zonas que no están habitadas. Por otro lado, las observaciones ruidosas se interpolarán para determinar zonas de riesgo basadas en las variables de interés $Y$ y $Y^{'}$ descritas en el Capítulo 2.\\
+
+De acuerdo con la metodología planteada, el primer paso es separar la tendencia espacial mediante un modelo de regresión lineal con covariables que nos permitan caracterizar los municipios que incluye la zona de estudio.\\
+
+Las covariables utilizadas para estimar la tendencia espacial están asociadas a los municipios de la región \emph{Centro-País} que caracterizan a cada municipio sociodemográficamente, su nivel de desarrollo humano, la economía del municipio y el acceso a los servicios de salud.\\
+
+El ajuste de las variables $Y$ y $Y^{'}$ involucra las siguientes variables:
+
+\begin{itemize}
+  \item \textbf{Sociodemográficas:}
+  \begin{itemize}
+	  \item Número de ocupantes promedio por vivienda en el municipio.
+	  \item Número de viviendas en el municipio.
+	  \item Nivel por entidad.
+  \end{itemize}
+  \item \textbf{Desarrollo humano:}
+  \begin{itemize}
+	  \item Índice de agua entubada en el municipio.
+	  \item Índice de servicios disponibles en el municipio.
+  \end{itemize}
+  \item \textbf{Economía:}
+  \begin{itemize}
+	  \item Longitud de la red carretera disponible en el municipio.
+	  \item Tomas instaladas de energía eléctrica.
+  \end{itemize}  
+  \item \textbf{Acceso a servicios de salud:}
+  \begin{itemize}
+	  \item Población total por condición de derechohabiencia a servicios de salud.
+	  \item Consultas por médico.
+	  \item Consultas por unidad médica.
+	  \item Médicos por unidad médica
+  \end{itemize}  
+\end{itemize}
+
+El ajuste del modelo que explica la tendencia espacial $\mu(s)$ se puede observar en la \emph{Figura \ref{fig20.ajustemu}} 
+
+  \begin{figure}[ht]
+  	\begin{subfigure}{.5\textwidth}
+  	  \centering
+  	  \includegraphics[width=1.0\linewidth]{graphs/gg20predy.png}
+  	\end{subfigure}%
+  	\begin{subfigure}{.5\textwidth}
+  	  \centering
+      \includegraphics[width=1.0\linewidth]{graphs/gg21predyp.png}
+  	\end{subfigure}
+    \caption{Ajuste de $Y$ y $Y^{'}$ para aislar la tendencia espacial.}
+    \label{fig20.ajustemu}
+  \end{figure}
+
+La incorporación de covariables para explicar la tendencia espacial nos permite explicar la correlación basada en la distancia aislando el efecto deriva en cada municipio. Las variables que se incorporan para explicar el promedio de defunciones por leucemias en niños y jóvenes nos confirman la idea de explicar la tendencia  mediante variables relacionadas con el acceso a servicios de salud, indicadores de desarrollo, urbanización y sociodemográficos en cierta medida\footnote{Los patrones espaciales que se buscan están centrados en la interpolación a partir de las variaciones a pequeña escala. La selección del método de interpolación espacial por Kriging universal está basada en la idea de aislar efectos que influyen en la defunción por leucemias en niños y jóvenes agregando por municipio.}. El resto se explicará mediante las variaciones a pequeña escala basadas en la distancia.\\
+
+En la \emph{Figura \ref{fig13.eta}} se observa que el componente aleatorio que nos explicará las variaciones en pequeña escala $\eta(s)$ tiene como media cero, una de las condiciones de la hipótesis intrínseca de estacionariedad de segundo orden.\\ 
+
+  \begin{figure}[!ht]
+  	\begin{subfigure}{.5\textwidth}
+  	  \centering
+  	  \includegraphics[width=1.0\linewidth]{graphs/gg22distretay.png}
+  	\end{subfigure}%
+  	\begin{subfigure}{.5\textwidth}
+  	  \centering
+      \includegraphics[width=1.0\linewidth]{graphs/gg23distretayp.png}
+  	\end{subfigure}
+    \caption{Ajuste de $Y$ y $Y^{'}$ para aislar la tendencia espacial.}
+  \label{fig13.eta}
+  \end{figure}
+
+Para probar que el componente aleatorio de la mortalidad estudiada satisface la estacionariedad en la varianza y por tanto en el semivariograma se calcula el semivariograma empírico.\\
+
+En la \emph{Figura \ref{fig12.varomn}} se muestra el semivariograma omnidireccional para $Y$ y $Y^{'}$. En ambos casos se tiene el comportamiento esperado, es decir,  la semivarianza aumenta conforme tomamos puntos más lejanos.\\ 
+
+Para el caso de la variable $Y$ el efecto pepita se alcanza ligeramente por encima del 0.05\% de defunciones por leucemias en niños y jóvenes. Los valores llegan hasta 0.18\% donde se alcanza la meseta.\\
+
+En el caso del indicador corregido por población $Y^{'}$ la pepita se alcanza en 0.05 aproximadamente y la semivarianza se mueve alrededor de 0.1 donde se alcanza la meseta.\\
+
+En ambos casos el rango es similar, sin embargo, es necesario probar las variaciones para verificar que el proceso es isotrópico para poder utilizar un solo semivariograma estimado para cada variable $Y$ y $Y^{'}$.\\
+
+  \begin{figure}[!ht]
+  	\begin{subfigure}{.5\textwidth}
+  	  \centering
+  	  \includegraphics[width=1.0\linewidth]{graphs/gg24variogomniy.png}
+  	\end{subfigure}%
+  	\begin{subfigure}{.5\textwidth}
+  	  \centering
+      \includegraphics[width=1.0\linewidth]{graphs/gg25variogomniyp.png}
+  	\end{subfigure}
+  \caption{Semivariograma empírico omnidireccional para explicar variaciones de pequeña escala de $Y$ (izquierda) y de $Y^{'}$ (derecha) en la región de interés.}
+  \label{fig12.varomn}
+  \end{figure}
+
+El semivariograma empírico en ambos casos sugiere que las variaciones en pequeña escala siguen un patrón espacial en el que la mortalidad por leucemias en la población de estudio varía entre municipios en función de la distancia. La noción de cercanía puede modelarse mediante una interpolación continua para predecir los valores cercanos a los centroides de los municipios.\\
+
+Una vez aislada la tendencia espacial y satisfaciendo la hipótesis intrínseca del componente aleatorio, el siguiente paso de la metodología planteada es el análisis de anisotropía.\\
+
+\bigskip
+
+\section{Análisis de anisotropía.}
+El análisis de anisotropía requiere que se calcule el semivariograma empírico de las variaciones en pequeña escala $\eta(s)$ de la mortalidad por leucemias en distintas direcciones.\\ 
+
+En la \emph{Figura \ref{fig26.var}} se observa que en distintas direcciones se presentan variaciones tanto en el rango como en la meseta de las variaciones a pequeña escala de la variable $Y$, por ejemplo, la meseta en dirección a $45^{\circ}$ y $90^{\circ}$ sólo se observa efecto pepita $(Rango = 0)$, mientras que el rango en $0^{\circ}$ y $135^{\circ}$ está alrededor de 2 y la meseta varía.\\
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.8\linewidth]{graphs/gg26variogdiry.png}
+  \caption{Semivariograma empírico en distintas direcciones para identificar anisotropía en las variaciones a pequeña escala de la variable $Y$.}
+  \label{fig26.var}
+\end{figure}
+
+Por su parte, en la \emph{Figura \ref{fig27.var}} también se muestra que en distintas direcciones se presentan variaciones tanto en el rango como en la meseta para $Y^{'}$.\\
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.8\linewidth]{graphs/gg27variogdiryp.png}
+  \caption{Semivariograma empírico en distintas direcciones para identificar anisotropía en las variaciones a pequeña escala de la variable $Y^{'}$.}
+  \label{fig27.var}
+\end{figure}
+
+
+A partir de las variaciones en el rango y la meseta se confirma la presencia de anisotropía zonal en ambos casos. La corrección de anisotropía se hará mediante rotaciones de ejes para poder ajustar un semivariograma omnidireccional en la predicción espacial.\\
+
+Identificando la dirección en la que se presentan los valores extremos de los rangos, la corrección de anisotropía consiste en la rotación de ejes mediante la razón de de los rangos extremos en la dirección $x$ y en la dirección $y$. Al rotar los ejes, se pretende utilizar la estimación del variograma omnidireccional para entrenar un modelo en cualquier dirección\footnote{Se desarrolla un modelo de optimización que minimice la desviación estándar del rango en distintas direcciones para encontrar la rotación que permita utilizar un solo semivariograma en cualquier dirección.}.\\
+
+En la \emph{Figura \ref{fig28.coray}} se muestran los semivariogramas direccionales empíricos corregidos mediante la rotación descrita y un ejemplo de ajuste al semivariograma omnidireccional que funciona razonablemente bien para cualquier dirección\footnote{Se selecciona un modelo esférico sólo para probar que se corrige la anisotropía zonal, sin embargo, en la siguiente sección se seleccionará el modelo que ajuste minimizando el error cuadrático medio entre el semivariograma empírico y distintos modelos.} al momento de explicar las variaciones a pequeña escala de la proporción de defunciones por leucemias en niños y jóvenes $(Y)$.\\
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.9\linewidth]{graphs/gg28variogdircory.png}
+  \caption{Semivariograma empírico corregido en distintas direcciones para eliminar anisotropía en las variaciones a pequeña escala de $Y$.}
+  \label{fig28.coray}
+\end{figure}
+
+En el caso del indicador corregido por población del municipio $(Y^{'})$ se muestra la misma estrategia de corrección de anisotropía rotando los ejes mediante parámetros obtenidos con el proceso de optimización que permite obtener rangos similares en distintas direcciones. La \emph{Figura \ref{fig29.corayp}} nos muestra que se puede utilizar un semivariograma omnidireccional para distintas direcciones.\\
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.9\linewidth]{graphs/gg29variogdircoryp.png}
+  \caption{Semivariograma empírico corregido en distintas direcciones para eliminar anisotropía en las variaciones a pequeña escala de $Y^{'}$.}
+  \label{fig29.corayp}
+\end{figure}
+
+La corrección de anisotropía para utilizar un semivariograma isotrópico para la interpolación de Kriging nos permite ajustar un modelo que se refinará en la siguiente sección tanto para las variaciones a pequeña escala de $Y$, como para $Y^{'}$.
+
+\newpage
+
+\section{Ajuste de semivariograma.}
+Se ajustan distintos modelos de semivariograma paramétrico para estimar los parámetros del semivariograma empírico asociado a $\eta(s)$. Se prueban los distintos modelos descritos en el capítulo anterior para seleccionar el modelo que minimiza el error de estimación mediante validación cruzada.\\
+
+El resultado de estimar los parámetros mediante la técnica de mínimos cuadrados generalizados con un enfoque de geoestadística clásica y por el método de máxima verosimilitud se muestran en la \emph{Figura \ref{fig30y31.ajusvary}}.
+
+  \begin{figure}[ht]
+  \begin{subfigure}{.5\textwidth}
+	  \centering
+	  \includegraphics[width=1.0\linewidth]{graphs/gg30varigmincuad.png}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+	  \centering
+    \includegraphics[width=1.0\linewidth]{graphs/gg31varigmaxsim.png}
+	\end{subfigure}
+  \caption{Ajustes del semivariograma empírico mediante semivariogramas paramétricos $(Y)$.}
+    \label{fig30y31.ajusvary}
+\end{figure}
+
+Utilizando los ajustes mostrados en la \emph{Figura \ref{fig30y31.ajusvary}} se utiliza la técnica de validación cruzada para seleccionar el mejor modelo\footnote{En términos espaciales, la validación cruzada consiste en evaluar los distintos modelos comparando los valores observados y las predicciones generadas por una interpolación de Kriging simple. Cada localización queda fuera para predecir con el resto de las observaciones utilizando los modelos mostrados en la \emph{Figura \ref{fig30y31.ajusvary}}}. El resultado de la validación cruzada se resume en la \emph{Tabla \ref{tab.ecm.y}} donde se reporta el Error Cuadrático Medio (ECM) de cada modelo.\\
+
+\begingroup
+    \fontsize{10pt}{12pt}\selectfont
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrr}
+  \hline
+Modelo & Mínimos Cuadrados & Máxima Verosimilitud \\ 
+  \hline
+  Exponencial & 0.001188 & 0.001177 \\
+  Esférico    & 0.001485 & 0.001240 \\
+  Gaussiano   & 0.001174 & 0.001202 \\
+  Matérn      & 0.001188 & 0.001177 \\
+   \hline
+\end{tabular}
+\captionof{table}{ECM de los modelos de semivariograma paramétrico para las variaciones a pequeña escala de $Y$.}
+\label{tab.ecm.y}
+\end{table}
+\endgroup
+
+El ECM se minimiza para el modelo \textbf{Gaussiano} estimado por el método de \textbf{Mínimos Cuadrados}. Para hacer las predicciones espaciales se usará el modelo mencionado, cuyos parámetros son: $\tau^2 = 0\textrm{.}0006$, $\sigma^2 = 0\textrm{.}0006$ y $\phi = 0\textrm{.}2567$.\\ 
+
+En el caso del indicador que corrige la proporción de defunciones por leucemias en niños y jóvenes por el tamaño de la población de los municipios involucrados en la región centro del país, los ajustes de los semivariogramas paramétricos se observan en la \emph{Figura \ref{fig32y33.ajusvaryp}}
+
+  \begin{figure}[ht]
+  \begin{subfigure}{.5\textwidth}
+	  \centering
+	  \includegraphics[width=1.0\linewidth]{graphs/gg32varigmincuadyp}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+	  \centering
+    \includegraphics[width=1.0\linewidth]{graphs/gg33varigmaxsimyp.png}
+	\end{subfigure}
+  \caption{Ajustes del semivariograma empírico mediante semivariogramas paramétricos $(Y^{'})$.}
+    \label{fig32y33.ajusvaryp}
+\end{figure}
+
+El resultado del proceso de validación cruzada para seleccionar el mejor modelo se resume en la \emph{Tabla \ref{tab.ecm.yp}} donde se reporta el ECM de cada modelo.\\
+
+\begingroup
+    \fontsize{10pt}{12pt}\selectfont
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrr}
+  \hline
+Modelo & Mínimos Cuadrados & Máxima Verosimilitud \\ 
+  \hline
+  Exponencial & 0.076212 & 0.075189 \\
+  Esférico    & 0.075746 & 0.075649 \\
+  Gaussiano   & 0.075006 & 0.075384 \\
+  Matérn      & 0.076212 & 0.075189 \\
+   \hline
+\end{tabular}
+\captionof{table}{ECM de los modelos de semivariograma paramétrico para las variaciones a pequeña escala de $Y^{'}$.}
+\label{tab.ecm.yp}
+\end{table}
+\endgroup
+
+De igual forma en el caso de las variaciones a pequeña escala asociadas al indicador de proporciones de defunciones por leucemias en niños y jóvenes en la región centro del país corregidas por tamaño de la población del municipio, el ECM se minimiza con el semivariograma paramétrico \textbf{Gaussiano} estimado mediante \textbf{Mínimos Cuadrados}. Los parámetros de este modelo son: $\tau^2 = 0\textrm{.}0539$, $\sigma^2 = 0\textrm{.}0193$ y $\phi = 0\textrm{.}2478$.\\ 
+
+En la siguiente sección se reportan los resultados del modelo de Kriging universal para estimar mortalidad por leucemias en niños y jóvenes para la región Centro de México.
+
+\bigskip
+
+\section{Interpolación de Kriging.}
+La aplicación de la interpolación espacial de Kriging utiliza la deriva determinada por el modelo que estima $\mu(s)$, por lo que se aplica el método de Kriging universal.\\ 
+
+Para hacer la interpolación del campo completo que cubre la región de estudio se genera una retícula que definirán los puntos que serán interpolados a partir de la proporción de mortalidad infantil y juvenil por leucemias en los centroides de los municipios incluidos.\\
+
+Se asignan las covariables por cercanía al municipio de los puntos que generan la retícula para calcular la estimación a la tendencia espacial y se utiliza el modelo \textbf{Gaussiano} del semivariograma para explicar las variaciones espaciales en pequeña escala de un proceso isotrópico.\\
+
+Al resolver el sistema lineal de Kriging para obtener las predicciones de proporción de muertes por leucemia en la población objetivo, se obtiene un mapa que describe el campo completo que representa la incidencia de mortalidad por leucemias en niños y jóvenes (\emph{Figura \ref{rastery}}). 
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1.0\linewidth]{graphs/gg34krigingy.png}
+  \caption{Predicciones espaciales mediante la interpolación de Kriging universal para la proporción de defunciones por leucemias en niños y jóvenes en la región centro del país por municipio.}
+  \label{rastery}
+\end{figure}
+
+
+El mapa de la \emph{Figura \ref{rastery}} se interpreta mediante las curvas de nivel que determinan un mapa de riesgo de zonas en las que la atención hacia este tipo de enfermedades es tardía y ocasiona la muerte en la población de estudio (\emph{Figura \ref{curvasy}}).\\
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1.0\linewidth]{graphs/gg35contornosy.png}
+  \caption{Curvas de nivel esperadas en el espacio continuo definido por la región de estudio para $Y$.}
+  \label{curvasy}
+\end{figure}
+
+En la \emph{Figura \ref{curvasy}} se observa que las zonas de riesgo para el fenómeno estudiado se centra en el sur del estado de Puebla, entidad que presenta mayores limitaciones en el acceso a servicios de salud.\\
+
+Otra forma de visualizar el campo definido por la mortalidad estudiada es mediante un gráfico en perspectiva donde se observan los valores más grandes de la proporción de muertes por leucemia en la población de estudio en la entidad de Puebla y en Hidalgo, entidades que en combinación con las variables económicas y de desarrollo humano tenían los valores más bajos. (\emph{Figura \ref{perspy}}).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9\linewidth]{graphs/gg36perspectivay.png}
+  \caption{Gráfico en perspectiva del campo aleatorio definido por la mortalidad en niños y jóvenes en la región centro de México utilizando la interpolación de Kriging universal.}
+  \label{perspy}
+\end{figure}
+
+
+Una aplicación de la explotación de este mapa es identificar colonias o regiones contenidas en un municipio que se encuentren en zonas con predicciones altas en la incidencia de mortalidad por leucemias y estudiar las condiciones de desarrollo y ambientales que se relacionan directamente con las tasas de mortalidad por leucemias en niños y jóvenes reportadas por INEGI.\\
+
+Para el caso del indicador corregido por tamaño de la población el mapa de la interpolación de Kriging tiene el comportamiento que se muestra en la \emph{Figura \ref{rasteryp}}. 
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1.0\linewidth]{graphs/gg37krigingyp.png}
+  \caption{Predicciones espaciales mediante la interpolación de Kriging universal para el indicador de la proporción de defunciones por leucemias en niños y jóvenes en la región centro del país corregido por tamaño de la población del municipio.}
+  \label{rasteryp}
+\end{figure}
+
+En este caso, no se ignora la prevalencia en la mortalidad por leucemias en niños y jóvenes en algunos municipios de la Ciudad de México, donde al corregir la proporción de defunciones por el tamaño de la población, se elimina la presencia del efecto de la variabilidad entre la población en las entidades que forman la región centro del país.\\
+
+El caso del mapa de riesgo mediante las curvas del nivel interpoladas por el indicador se muestra en la \emph{Figura \ref{curvasyp}}. Este mapa de riesgo nos señala zonas vulnerables de Puebla, Tlaxcala y la Ciudad de México.\\
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1.0\linewidth]{graphs/gg38contornosyp.png}
+  \caption{Curvas de nivel esperadas en el espacio continuo definido por la región de estudio para $Y^{'}$.}
+  \label{curvasyp}
+\end{figure}
+
+En relación al gráfico en perspectiva también se hacen comparables las diferencias.\\ 
+
+Corrigiendo por tamaño de la población del municipio se observan más entidades en riesgo por defunciones ocasionadas por leucemias y las variaciones en el indicador se acentúan en comparación con el caso de la proporción de defunciones sin aislar el efecto de la población. (\emph{Figura \ref{perspyp}}).\\
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.9\linewidth]{graphs/gg39perspectivayp.png}
+  \caption{Gráfico en perspectiva del campo aleatorio definido por el indicador de la mortalidad en niños y jóvenes en la región centro de México corrigiendo por tamaño de la población utilizando la interpolación de Kriging universal.}
+  \label{perspyp}
+\end{figure}
+
+Es relavente describir el comportamiento de la interpolación espacial aislando el efecto del tamaño de la población y tomando en cuenta sólo la proporción. Ambas modelaciones nos proporcionan información útil para determinar acciones en políticas públicas en salud basadas en el riesgo de mortalidad de una población vulnerable.
+
+\thispagestyle{empty}
+
+%----------------------------------------------------------------------------------------
+%  CONCLUSIONES
+%----------------------------------------------------------------------------------------
+\chapter{Conclusiones}
+
+El análisis de patrones espaciales es una herramienta útil para caracterizar regiones a partir de la ocurrencia de un fenómeno que es registrado mediante mediciones capturadas en un número finito de puntos. En el caso particular de la incidencia de mortalidad, es posible generar un campo aleatorio completo mediante la interpolación de Kriging si se controlan los supuestos que permiten aplicar la técnica de predicción espacial.\\
+
+Los datos de mortalidad tienen como unidad de análisis el acta de defunción de la persona registrada, si se tuviera la dirección exacta del difunto, el proceso estocástico asociado a la ocurrencia de una defunción, podría recibir un tratamiento continuo para hacer la interpolación de la variable de estudio. En ausencia del detalle en la ubicación de residencia del registro de muertes, el centroide de los municipios nos da una idea de la proporción de muertes ocurridas en cada punto, y a partir de la ubicación de los municipios se hace la predicción espacial.\\
+
+Las leucemias en niños y jóvenes son una de las principales causas de muerte en este sector de la población. El estudio de los patrones espaciales motiva el diseño concreto y enfocado de investigación epidemiológica para detectar las causas. En este sentido, los hallazgos del análisis espacial permite definir las líneas de investigación sin que los resultados sean concluyentes para detectar las causas, no obstante, la descripción de las zonas en un planteamiento de fenómeno continuo nos permiten identificar zonas que requieren atención especial.\\
+
+Para aplicar el método de prediccion espacial es necesario identificar las condiciones necesarias del análisis geoestadístico que sustentan los resultados. En el presente estudio se propone una metodología que involucra el tratamiento de bases de datos unificadas para lograr dicho propósito.\\
+
+Los resultados sugieren que la mortalidad infantil y juvenil por leucemias están relacionadas con indicadores de desarrollo, que podría asociarse con deficiencias en el sistema de salud para su tratamiento oportuno, o bien, con el análisis de las zonas de influencia relacionadas con los patrones espaciales de la incidencia de mortalidad por un tipo de cáncer que debe ser atendido para disminuir las fatalidades en uno de los sectores de la población más vulnerables.\\
+
+El efecto del tamaño de la población al modelar la variable de interpolación espacial es importante para hacer comparables las proporciones de defunciones por leucemias en niños y jóvenes. La variable corregida pierde interpretación al convertirse en un índice que proporciona nociones de la gravedad en la atención oportuna de un padecimiento que detectado oportunamente reduce el riesgo de mortalidad, sin embargo, los resultados producen hallazgos que se identifican sólo al hacer comparables las unidades de análisis, en este caso los municipios del centro del país.\\ 
+
+Es en la tendencia espacial donde se hace presente el efecto del tamaño de la población, ya que en las variaciones a pequeña escala, el comportamiento del semivariograma omnidireccional al corregir la anisotropía se ajusta con el mismo tipo de semivariograma paramétrico.\\
+
+Ya sea corrigiendo por el tamaño de la población a través de un indicador o con la proporción pura de defunciones por leucemias en niños y jóvenes, la zona sur del estado de Puebla es consistentemente una zona que debe ser atendida para evitar que una de las poblaciones más vulnerables se vea afectada por un padecimiento tratable si se detecta a tiempo.\\
+
+En términos de salud pública es importante detectar zonas de riesgo para la población y el estudio de patrones espaciales requiere un tratamiento más allá de la visualización de frecuencias en mapas. La contribución del presente trabajo es un compendio metodológico para tratar la variabilidad de datos espaciales en función de la distancia para interpolar un fenómeno de riesgo a la población en lugares inaccesibles o ruidosos en su reporte de incidencias asociados con el fenómeno a tratar.\\
+
+\thispagestyle{empty}
+
+
+%----------------------------------------------------------------------------------------
+%  APÉNDICES
+%----------------------------------------------------------------------------------------
+{\vspace{2em}}
+\addtocontents{toc}%{\vspace{2em}} % Agrega espacios en la toc
+
+\appendix % Los siguientes capítulos son apéndices
+
+\chapter{Código}
+
+\begingroup
+\fontsize{9pt}{9pt}\selectfont
+%\begin{lstlisting}
+\begin{verbatim}
+###################################################################
+### Carga los datos por anio
+###################################################################
+library(foreign)
+defun <- list()
+for (i in 1:25){
+  file <- paste("~/defunciones_base_datos_",(i-1)+1990,"/DEFUN",
+  substr(as.character((i-1)+1990),3,4),".DBF",sep='')
+  defun[[i]] <- read.dbf(file)
+  defun[[i]]$ANIO <- (i-1)+1990
+}
+#
+###################################################################
+### Intregra una base de datos acumulada 
+### de acuerdo con el numero de variables coincidentes por bloques
+###################################################################
+rbind.all.columns <- function(x, y) {
+  x.diff <- setdiff(colnames(x), colnames(y))
+  y.diff <- setdiff(colnames(y), colnames(x))
+  x[, c(as.character(y.diff))] <- NA
+  y[, c(as.character(x.diff))] <- NA
+  return(rbind(x, y))
+}  ### Fuente: https://amywhiteheadresearch.wordpress.com
+defun90_99 <- rbind.all.columns(defun90_97,defun98_99)  # Bloque 1
+defun00_03 <- rbind.all.columns(defun00_01,defun02_03)  # Bloque 2
+defun90_03 <- rbind.all.columns(defun90_99,defun00_03)  # Bloque 3
+defun90_11 <- rbind.all.columns(defun90_03,defun04_11)  # Bloque 4
+defun90_13 <- rbind.all.columns(defun90_11,defun12_13)  # Bloque 5
+defun90_14 <- rbind.all.columns(defun90_13,defun14)     # Bloque 6
+#
+###################################################################
+### Generacion de variable de muerte por leucemias y filtro de edad
+###################################################################
+defun90_13$LEUCEMIA <- 0
+defun90_13$LEUCEMIA <- ifelse(is.na(defun90_13$LISTA_BAS)==FALSE 
+& as.character(defun90_13$LISTA_BAS)=='141',1,defun90_13$LEUCEMIA)
+defun90_13$LEUCEMIA <- ifelse(is.na(defun90_13$LISTA_MEX)==FALSE 
+& as.character(defun90_13$LISTA_MEX)=='14D',1,defun90_13$LEUCEMIA)
+defun90_13 <- defun90_13[defun90_13$EDAD<=4020,]
+#
+###################################################################
+### Agrega datos por municipio
+###################################################################
+library(dplyr)
+centroides <- coordenadas %>% 
+  group_by(EDOMUN,entidad) %>% 
+  summarise(cen.lat=mean(lat),cen.lon=mean(lon)) %>% 
+  left_join(simbad, by = c("EDOMUN"="V3"))
+def.mun <- defun90_14 %>% 
+  mutate(EDOMUN = ENT_RESID*1000 + MUN_RESID) %>% 
+  group_by(EDOMUN) %>% 
+  summarise(ndef = n(), nleu = sum(LEUCEMIA)) %>% 
+  mutate(def.leu = nleu/ndef) %>% 
+  left_join(centroides, by = "EDOMUN") %>% 
+  filter(entidad %in% c(9,13,15,17,21,29)) %>% 
+  na.omit %>%
+  mutate(distr.pob = (log(V11))) %>% 
+  mutate(def.leu.w = def.leu*distr.pob)
+#
+###################################################################
+### Exploractorio de objeto geoR
+###################################################################
+library(geoR)
+datosCEN <- subset(def, ENTABR  %in% 
+                   c("PUE","TLAX","HGO","DF","MEX","QRO","MOR"), 
+                   select=c('lon','lat','enf','ENTABR'))
+names(datosCEN) <- c('x','y','leucemia','entidad')
+datosCEN$leucemia <- datosCEN$leucemia*100
+datosCEN <- datosCEN[datosCEN$leucemia<=10,]
+datosCEN.geo<-as.geodata(datosCEN,coords.col=1:2,data.col=3) 
+plot(datosCEN.geo)
+#
+###################################################################
+### Modelo para estimar la tendencia espacial
+###################################################################
+df.centro <- def.mun.2 %>% filter(def.leu>0)
+mod.1 <- lm(def.leu ~ 1 + scale(as.numeric(V12)) +
+              scale(as.numeric(V8)) + 
+              scale(as.numeric(V10)) + 
+              as.factor(entidad) + 
+              scale(as.numeric(V65)) + 
+              scale(as.numeric(V5)) + 
+              scale(as.numeric(V33)) + 
+              scale(as.numeric(Poblacion total por condicion de 
+			        derechohabiencia a servicios de 
+					salud)) + 
+              scale(as.numeric(Consultas por medico)) + 
+              scale(as.numeric(Consultas por unidad medica)) + 
+              scale(as.numeric(Medicos por unidad medica)), 
+			  data = df.centro)
+summary(mod.1)
+errores <- data.frame(mod.1$residuals)
+ggplot(errores,aes(x=mod.1.residuals)) + geom_density()
+ggplot(df.centro,aes(x=def.leu)) + geom_histogram()
+df.centro$eta.hat <- datosCEN$leucemia - mod.1$fitted.values
+#
+###################################################################
+### Calculo de variograma omnidireccoinal y direccionales
+###################################################################
+datosCEN <- subset(def, ENTABR  %in% 
+                   c("PUE","TLAX","HGO","DF","MEX","MOR"), 
+                   select=c('lon','lat','eta.hat','ENTABR'))
+names(datosCEN) <- c('x','y','leucemia','entidad')
+datosCEN$leucemia <- datosCEN$leucemia*100
+datosCEN <- datosCEN[datosCEN$leucemia<=10,]
+datosCEN.geo<-as.geodata(datosCEN,coords.col=1:2,data.col=3) 
+D.max <- 0.8*diff(range(datosCEN$y))
+variogCEN <- variog(datosCEN.geo,max.dist=D.max)
+plot(variogCEN)
+leu.variog <-  lapply(seq(10,145,45), function(x) {
+  variog(datosCEN.geo,dir=x*pi/180, max.dist=D.max, tol=pi/8)})
+par(mfrow=c(2,2))
+for(i in 1:4){
+  plot(leu.variog[[i]], main=paste("Direccion:", 
+                                    (i-1)*45, "grados"))
+}
+#
+###################################################################
+### Correccion de anisotropia
+###################################################################
+ajuste.direc <- list()
+rango.pr <- rep(NA,4)
+variogdir <- list()
+for (i in 1:4){
+  variogdir[[i]] <- variog(datosCEN.geo,max.dist=D.max,
+                           direction=(i-1)*(pi/4)+pi/18, 
+						   tol=pi/8)
+  ajuste.direc[[i]] <- variofit(variogdir[[i]],
+                                ini.cov.pars=c(1,4),
+                                cov.model="exponential")
+  rango.pr[i] <- ajuste.direc[[i]]$practicalRange
+}
+rosa.2 <- data.frame(grados=seq(10,145,45),rango=rango.pr)
+ini_i = 0; ini_j = 0;
+desv.rango <- matrix(rep(NA,100),10,10)
+for (i in 1:10){
+  for (j in 1:10){
+    ratiox <- ini_i + i
+    ratioy <- ini_j + j
+    coords.new <- coords.aniso(coordinates(datosCEN[,c(1,2)]), 
+                               aniso.pars=c(ratiox, ratioy)) 
+    datos.ani <- data.frame(anix=coords.new[,1],
+	                        aniy=coords.new[,2],
+                            leucemia=datosCEN$leucemia) 
+    datos.ani.geo<-as.geodata(datos.ani,coords.col=1:2,
+	                          data.col=3) 
+    D.max <- 0.8*diff(range(datos.ani$aniy))
+    
+    variogdir <-  lapply(seq(0,135,45), function(x) {
+      variog(datos.ani.geo,dir=x*pi/180, max.dist=D.max, 
+	         tol=pi/8)})
+    
+    ajuste.direc <-  lapply(seq(1,4), function(x) {
+      variofit(variogdir[[x]],#ini.cov.pars=c(1,4),
+               cov.model="spherical")})
+    
+    for (k in 1:4){
+      rango.pr[k] <- ajuste.direc[[k]]$practicalRange
+    }
+    rango.pr
+    desv.rango[i,j] = sd(rango.pr)
+  }
+}
+coords.new <- coords.aniso(coordinates(datosCEN[,c(1,2)]), 
+                           aniso.pars=c(ratiox, ratioy)) 
+datos.ani <- data.frame(anix=coords.new[,1],
+                        aniy=coords.new[,2],
+                        leucemia=datosCEN$leucemia) 
+datos.ani.geo<-as.geodata(datos.ani,coords.col=1:2,data.col=3) 
+D.max <- 0.8*diff(range(datos.ani$aniy))
+var.omni <- variog(datos.ani.geo,max.dist=D.max)
+plot(var.omni)
+ajuste.omni <- variofit(var.omni,ini.cov.pars=c(1,4),
+                        cov.model="exponential")
+lines(ajuste.omni)
+D.max <- 0.8*diff(range(datos.ani$aniy))
+for (i in 1:4){
+  variogdir[[i]] <- variog(datos.ani.geo,max.dist=D.max,
+                           direction=(i-1)*(pi/4)+pi/18, 
+						   tol=pi/4)
+  ajuste.direc[[i]] <- variofit(variogdir[[i]],
+                                ini.cov.pars=c(1,4),
+                                cov.model="exponential")
+  rango.pr[i] <- ajuste.direc[[i]]$practicalRange
+}
+par(mfrow=c(2,2))
+for(i in 1:4){
+  plot(variogdir[[i]], main=paste("Direccion a ", (i-1)*45+10, 
+  " grados"),xlab='Distancia',ylab='Semivarianza',max.dist=D.max)
+  lines(ajuste.omni)
+}
+dev.off()
+#
+###################################################################
+### Ajustes de variogramas
+###################################################################
+variog.fit <- lapply(c("exponential",
+                       "spherical",
+					   "gaussian",
+					   "matern"),
+                     function(x) {variofit(var.omni,
+					 cov.model=x)})
+plot(var.omni,main='Minimos cuadrados')
+lines(variog.fit[[1]],col='black')
+lines(variog.fit[[2]],col='red')
+lines(variog.fit[[3]],col='blue')
+lines(variog.fit[[4]],col='green')
+legend('bottomright', c('Exponencial','Esferico',
+                        'Gaussiano','Matern'), lty=1, 
+						col=c('black', 'red', 'blue','green'), 
+						bty='n', cex=.5)
+variog.lik <- lapply(c("exponential",
+                       "spherical",
+					   "gaussian",
+					   "matern"),
+     function(x) {likfit(datos.ani.geo,
+	                     ini.cov.pars=c(1.3443, 0.0025),
+                         cov.model=x)})
+plot(var.omni,main='Maxima verosimilitud')
+lines(variog.lik[[1]],col='black')
+lines(variog.lik[[2]],col='red')
+lines(variog.lik[[3]],col='blue')
+lines(variog.lik[[4]],col='green')
+legend('bottomright', c('Exponencial','Esferico',
+                        'Gaussiano','Matern'), 
+       lty=1, 
+	   col=c('black', 'red', 'blue','green'), bty='n', cex=.5)
+#       
+###################################################################
+### Validacion cruzada
+###################################################################
+variog.fit.xv <- lapply(1:4, function(x) {
+                   xvalid(datosCEN.geo,model=variog.fit[[x]])})
+variog.lik.xv <- lapply(1:4, function(x) {
+                   xvalid(datosCEN.geo,model=variog.lik[[x]])}))
+ECM.MC <- rep(NA,4)
+for (i=1:4){
+  ECM.MC[i] <- mean((variog.fit.xv[[i]]$data - 
+                     variog.fit.xv[[i]]$predicted)^2),
+}
+ECM.MV <- rep(NA,4)
+for (i=1:4){
+  ECM.MV[i] <- mean((variog.lik.xv[[i]]$data - 
+                     variog.lik.xv[[i]]$predicted)^2),
+}
+
+#
+###################################################################
+### Preparacion de datos para hacer Kriging
+###################################################################
+negrid <- expand.grid(x = seq(-100.5,-96.8,length=30),
+                      y = seq(17.5,22,length=50))
+predlocs<-as.matrix(cbind(negrid$x,negrid$y))
+datosCEN.2 <- subset(defunciones5, ENTABR  %in% 
+                     c("PUE","TLAX","HGO","DF","MEX","MOR"), 
+                     select=c('V12','V34','V52'))
+datosCEN.2$V12 <- scale(as.numeric(datosCEN.2$V12))
+datosCEN.2$V34 <- scale(as.numeric(datosCEN.2$V34))
+datosCEN.2$V52 <- scale(as.numeric(datosCEN.2$V52))
+datosCEN.2$enf <- datosCEN.2$enf*100
+datosCEN.2 <- datosCEN.2[datosCEN.2$enf<=10,]
+datosCEN2.geo<-as.geodata(datosCEN.2, coords.col = 1:2, 
+                          data.col = 3,
+                          covar.col = 4:6) 
+D.max <- 1.5*diff(range(datosCEN.2$lat))
+estV.trend <- variog(datosCEN2.geo, option="bin",
+                     trend= ~  1 + V12 + V34 + V52,
+                     bin.cloud="TRUE", max.dist=D.max)
+n.mues <- dim(datosCEN.2)[1]
+grid <- data.frame(predlocs)
+n.grid <- dim(grid)[1]
+distancia <- matrix(rep(NA,n.mues*n.grid),nrow=n.grid,
+                    ncol=n.mues)
+for (i in 1:n.mues){
+  for (j in 1:n.grid){
+    distancia[j,i] <- sqrt((datosCEN.2$lon[i]-grid$X1[j])^2 + 
+                           (datosCEN.2$lat[i]-grid$X2[j])^2)
+  }
+}
+indices.minimos <- rep(NA,n.grid)
+for (i in 1:n.grid){
+  indices.minimos[i] <- which.min(distancia[i,]) 
+}
+grid$lon <- rep(NA,n.grid)
+grid$lat <- rep(NA,n.grid)
+for (i in 1:n.grid){
+  grid$lon[i] <- datosCEN.2$lon[indices.minimos[i]]
+  grid$lat[i] <- datosCEN.2$lat[indices.minimos[i]]
+}
+grid <- cbind(1,grid)
+grid <- join(grid,datosCEN.2)
+grid.geodata <- as.geodata(grid, data.col = 6, coords.col = 2:3, 
+                           covar.col=7:9)
+#
+###################################################################
+### Kriging universal para interpolar el campo completo
+###################################################################
+pepita <- variog.fit.sph$nugget
+covpars <- variog.fit.sph$cov.pars
+kc.uk.control <- krige.control(type.krige = "ok", 
+           trend.d = trend.spatial(estV.trend$trend,datosCEN2.geo), 
+           trend.l = trend.spatial(estV.trend$trend,grid.geodata), 
+           cov.model = "spherical",
+           aniso.pars = c(ratiox, ratioy),
+           cov.pars=covpars, nugget = pepita)
+krig <- krige.conv(datosCEN2.geo, locations = predlocs,
+                   krige = kc.uk.control)
+my_palette <- brewer.pal(5, "YlOrBr")
+plot(negrid)
+image(krig, loc = predlocs, col = my_palette, add=T)
+contour(krig, add=T, col="blue")
+persp(krig, theta = 30, phi = 45, expand = 0.5, col = "orange",
+      ltheta = 120, shade = 0.75, ticktype = "detailed",
+      xlab = "Longitud", ylab = "Latitud", 
+      zlab = "% mortalidad por leucemias")  
+%\end{lstlisting}
+\end{verbatim}
+\endgroup
+
+\addtocontents{toc}{\vspace{2em}} % Agrega espacio en la toc
+
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAFÍA
+%----------------------------------------------------------------------------------------
+\begin{thebibliography}{9}
+
+\bibitem{bivand}
+  Bivand, R. \emph{et al}. 
+  \emph{Applied Spatial Data Analysis with R}. Springer, US, 2008
+
+\bibitem{cancer}
+  \url{http://Cancer.org}
+  \emph{Childhood Leukemia}. American Cancer Society, 2015
+
+\bibitem{couto}
+  Couto A, et al. 
+  \emph{Trends in childhood leukemia mortality over a 25-year period}. Jornal de Pediatria, Brasil, 2010
+
+\bibitem{cressie}
+  Cressie, N.
+  \emph{Statistics for Spatial Data}. John Wiley \& Sons, 1993
+
+\bibitem{cuevas}
+  Cuevas-Urióstegui, M. \emph{et al}.
+  \emph{Epidemiología del cáncer en adolescentes}. Salud pública Méx vol.45  supl.1 Cuernavaca, 2003
+
+\bibitem{diaz-avalos}
+  Díaz-Avalos, C. \emph{et al}.
+  \emph{Comparison of spatial methods for the assessment of planktonic patches}. Environ Ecol Stat, Vol. 13, Springer, 2006
+
+\bibitem{diaz_itam}
+  Díaz-Avalos, C.
+  \emph{Notas sobre Estadística Espacial}. Curso Primavera 2015 para la Maestría en Ciencia de Datos, ITAM, 2015
+
+\bibitem{diggle}
+  Diggle P, Ribeiro P.
+  \emph{Model-based Geostatistics}. Springer Series in Statistics, Springer, 2007.
+
+\bibitem{duarte}
+  Duarte-Gómez M, Nuñez-Urquiza R, Restrepo-Restrepo J, Richardson-López-Collada V.
+  \emph{Determinantes sociales de la mortalidad infantil en municipios de bajo índice de desarrollo humano en México}. Boletín Médico del Hospital Infantil de México, 2015
+  
+\bibitem{diaz}
+  Díaz-Viera, M.
+  \emph{Geoestadística Aplicada}. Instituto de Geofísica - Instituto de Geofísica y Astronomía, UNAM - CITMA, México - Cuba, 2002
+
+\bibitem{goovaerts}
+  Goovaerts, P.
+  \emph{Exploring scale-dependent correlations between cancer mortality rates using factorial Kriging and population-weighted semivariograms}. Geogr Anal. Apr, 2005
+
+\bibitem{INEGI1}
+  Instituto Nacional de Estadística Geografía e Informática.
+  \emph{Estadística de defunciones generales. Síntesis metodológica}. 2014.
+
+\bibitem{INEGI12}
+  Instituto Nacional de Estadística Geografía e Informática.
+  \emph{Compendios estadísticos regionales}. 2009.
+
+\bibitem{kumar}
+  Kumar A, Vashist M, Rathee R.
+  \emph{Maternal factors and risk of childhood leukemia.} Asian Pac J Cancer Prev. 2014.
+
+\bibitem{mitasova}
+  Mitas L, Mitasova H.
+  \emph{Multidimensional Spatial Interpolation.} GMS Laboratory, University of Illinois at Urbana-Champaign, 1998.
+
+\bibitem{monge}
+  Monge, Patricia.
+  \emph{Occupational exposure to pesticides and risk of leukemia among offspring in Costa Rica}. Karolinska University Press, Sweden, 2006.
+
+\bibitem{observatorio}
+  Secretaría  de  Salud.
+  \emph{Observatorio  del  Desempeño  Hospitalario  2011.}. Dirección  General  de  Evaluación  del Desempeño.  Secretaría de Salud. México, 2012.
+
+\bibitem{OMS1}
+  Organización Mundial de la Salud.
+  \emph{Reducción de la mortalidad en la niñez}. Nota descriptiva 178, 2016.
+
+\bibitem{OMS2}
+  Organización Mundial de la Salud.
+  \emph{Adolescentes: riesgos para la salud y soluciones}. Nota descriptiva 345, 2014.
+
+%\bibitem{PND}  
+%  Gobierno de la Republica, Estados Unidos Mexicanos. 
+%  \emph{Plan Nacional de Desarrollo 2013 – 2018}. 2013. 
+  
+\bibitem{pintos}
+  Pintos, S.
+  \emph{Predicción Geoestadística: Kriging Simple, Ordinario y con Tendencia}. Instituto de Cálculo Aplicado, Universidad del Zulia - Facultad de Ingeniería, Maracaibo - VenezuelaVenezuela, 2012.
+
+\bibitem{rizo}
+  Rizo-Ríos, P. \emph{et al}.
+  \emph{Mortalidad por leucemias en menores de 20 años. México 1998-2002}. Boletín médico del Hospital Infantil de México, vol.62 no.1 México, 2005
+
+\bibitem{changying}
+  Shao, C.
+  \emph{Approaches to the spatial modelling of cancer incidence and mortality in metropolitan Perth, Western Australia, 1990-2005}. Faculty of Computing, Health and Science, Edith Cowan University, Western Australia, 2011.
+
+\bibitem{tisnes}
+  Tisnés, A.
+  \emph{Análisis espacial de la mortalidad por cáncer en Tandil 2003-2005 utilizando métodos bayesianos}. Estudios Socioterritoriales. Revista de Geografía. No. 15, Argentina, 2014.
+  
+\bibitem{turner}
+  Turner M, Wigle D, Krewski D.
+  \emph{Residential pesticides and childhood leukemia:a systematic review and meta-analysis}. EnvironHealth Perspect, Canada, 2009.  
+
+\bibitem{vera}
+  Vera, A. \emph{et al}.
+  \emph{Análisis de la mortalidad por leucemia aguda pediátrica en el Instituto Nacional de Cancerología}. Revista Biomédica, Instituto Nacional de Salud, Vol. 32, No. 3, Colombia, 2012.
+
+\bibitem{walter}
+  Walter, B. \emph{et al}.
+  \emph{Prediction of Early Death After Induction Therapy for Newly Diagnosed Acute Myeloid Leukemia With Pretreatment Risk Scores: A Novel Paradigm for Treatment Assignment}. Journal of Clinical Oncology, Vol. 29, No. 33, Novembre 20 2011.
+
+\end{thebibliography}
+
+
+\end{document}
